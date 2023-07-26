@@ -1,6 +1,7 @@
 import React from "react";
 import Sider from "antd/es/layout/Sider";
 import "./index.less";
+import {Button} from "antd";
 const LeftMenu: React.FC = () => {
   return (
     <Sider
@@ -16,7 +17,8 @@ const LeftMenu: React.FC = () => {
       collapsed={false}
       collapsible
     >
-
+    <Button>首页</Button>
+    <Button>病历</Button>
     </Sider>
   )
 }

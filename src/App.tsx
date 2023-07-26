@@ -1,16 +1,11 @@
 import './App.css'
 import React from "react";
-import {Route, Routes} from "react-router-dom";
-import Layouts from "@/layouts";
-import Login from "@/pages/Login";
+import {Router} from "@/router";
 
 const App: React.FC = () => {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Layouts/>}/>
-        <Route path="/login" element={<Login/>}/>
-      </Routes>
+      <Router/>
     </>
   )
 }

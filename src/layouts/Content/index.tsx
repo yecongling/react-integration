@@ -1,16 +1,16 @@
 import React, {Suspense} from "react";
 import {Layout, Spin} from "antd";
-import {Outlet} from "react-router-dom";
+import RouterBeforeEach from "@/router/RouterBeforeEach.tsx";
 /* 内容区域 */
-const Index: React.FC = ()=> {
+const Index: React.FC = () => {
   return (
     <Layout.Content className="dis-fl fd-c" style={{padding: '10px', overflowY: 'auto', overflowX: 'hidden'}}>
       <Suspense fallback={
-        <div className="dis-fl jc-ct ai-ct" style={{ height: '100vh' }}>
-          <Spin size="large" />
+        <div className="dis-fl jc-ct ai-ct" style={{height: '100vh'}}>
+          <Spin size="large"/>
         </div>
       }>
-        <Outlet></Outlet>
+        <RouterBeforeEach/>
       </Suspense>
     </Layout.Content>
   )
