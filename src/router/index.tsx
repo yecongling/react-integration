@@ -1,5 +1,6 @@
 import {useRoutes} from "react-router-dom";
 import {lazy, Suspense} from 'react'
+import {Spin} from "antd";
 
 const routes = [
   {
@@ -49,9 +50,7 @@ const generateRouter = (routers: any) => {
     if (item.children) {
       item.children = generateRouter(item.children)
     }
-    item.element = <Suspense fallback={
-      <div>加载中...</div>
-    }>
+    item.element = <Suspense fallback={<Spin size="large"/>}>
       {/* 把懒加载的异步路由变成组件装载进去 */}
       <item.component/>
     </Suspense>

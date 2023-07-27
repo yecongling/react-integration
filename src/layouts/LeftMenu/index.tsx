@@ -1,8 +1,11 @@
 import React from "react";
 import Sider from "antd/es/layout/Sider";
 import "./index.less";
-import {Button} from "antd";
+import {Menu} from "antd";
+import {useNavigate} from "react-router-dom";
+
 const LeftMenu: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <Sider
       trigger={null}
@@ -17,8 +20,27 @@ const LeftMenu: React.FC = () => {
       collapsed={false}
       collapsible
     >
-    <Button>首页</Button>
-    <Button>病历</Button>
+      <Menu
+        mode="vertical"
+        items={
+          [
+            {
+              key: "home",
+              label: "首页",
+              onClick: () => navigate('/home')
+            },
+            {
+              key: "emr",
+              label: "关于",
+              onClick: () => navigate('/emr')
+            },
+            {
+              key: "login",
+              label: "登陆",
+              onClick: () => navigate('/login')
+            },
+          ]
+        }/>
     </Sider>
   )
 }
