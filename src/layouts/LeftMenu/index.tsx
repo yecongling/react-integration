@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Sider from "antd/es/layout/Sider";
 import "./index.less";
 import favicon from "@/assets/images/favicon.png";
@@ -12,6 +12,9 @@ const LeftMenu: React.FC = () => {
   // 通过useSelector直接拿到store中定义的value
   const {collapse} = useSelector((store: any) => store.global);
   const [isCollapse, setCollapse] = useState(collapse);
+  useEffect(() => {
+    setCollapse(collapse);
+  }, [collapse])
   return (
     <Sider
       trigger={null}
