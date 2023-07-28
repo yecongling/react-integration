@@ -1,34 +1,52 @@
 import {useRoutes} from "react-router-dom";
-import {lazy, Suspense} from 'react'
+import React, {Suspense} from 'react'
 import {Spin} from "antd";
+
+const lazyLoad = (moduleName: string) => {
+  const viteModule = import.meta.glob('../**/*.tsx');
+  //组件地址
+  let URL = "";
+  if (moduleName === "layouts") {
+    URL = `../layouts/index.tsx`;
+  } else if (moduleName.endsWith(".tsx")) {
+    URL = `../pages/${moduleName}`;
+  } else {
+    URL = `../pages/${moduleName}/index.tsx`;
+  }
+  console.log(viteModule[`${URL}`])
+  const Module = React.lazy(viteModule[`${URL}`] as any);
+  return (
+    <Module/>
+  );
+}
 
 const routes = [
   {
     path: '/',
     auth: false,
-    component: lazy(() => import('@/layouts')),
+    component: React.lazy(() => import("@/layouts")),
     children: [
       {
         path: "home",
         auth: false,
-        component: lazy(() => import('@/pages/Home'))
+        component: lazyLoad('Home').type
       },
       {
         path: "emr",
         auth: false,
-        component: lazy(() => import('@/pages/Emr'))
+        component: lazyLoad('Emr').type
       }
     ]
   },
   {
     path: '/login',
     auth: false,
-    component: lazy(() => import('@/pages/Login'))
+    component: lazyLoad('Login').type
   },
   {
     path: '*',
     auth: false,
-    component: lazy(() => import('@/pages/404.tsx'))
+    component: lazyLoad('404.tsx').type
   }
 ]
 
@@ -51,9 +69,10 @@ const generateRouter = (routers: any) => {
       item.children = generateRouter(item.children)
     }
     item.element = <Suspense fallback={<Spin size="large"/>}>
-      {/* 把懒加载的异步路由变成组件装载进去 */}
       <item.component/>
-    </Suspense>
+    </Suspense>;
+    {/* 把懒加载的异步路由变成组件装载进去 */
+    }
     return item
   })
 }
