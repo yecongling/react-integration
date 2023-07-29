@@ -8,8 +8,8 @@ export interface globalState {
 
 const initialState: globalState = {
   theme: "light",
-  colorPrimary: "#ccc",
-  collapse: false
+  colorPrimary: "#1890ff",
+  collapse: true
 }
 
 // 创建一个Slice
@@ -22,15 +22,25 @@ export const global = createSlice({
 
   // 定义reducer并生成关联的操作
   reducers: {
-    setGlobalState(state, {payload}) {
+    setCollapse(state, {payload}) {
       console.log(payload);
       state.collapse = payload.collapse
+    },
+
+    setTheme(state, {payload}) {
+      console.log(payload);
+      state.theme = payload.theme
+    },
+
+    setColorPrimary(state, {payload}) {
+      console.log(payload);
+      state.colorPrimary = payload.colorPrimary
     }
   }
 });
 
 // 到处reducer方法
-export const {setGlobalState} = global.actions;
+export const {setCollapse, setTheme, setColorPrimary} = global.actions;
 
 // 默认到处
 export default global.reducer

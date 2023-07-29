@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 const LeftMenu: React.FC = () => {
   const navigate = useNavigate();
   // 通过useSelector直接拿到store中定义的value
-  const {collapse} = useSelector((store: any) => store.global);
+  const {collapse, theme} = useSelector((store: any) => store.global);
   const [isCollapse, setCollapse] = useState(collapse);
   useEffect(() => {
     setCollapse(collapse);
@@ -25,14 +25,14 @@ const LeftMenu: React.FC = () => {
         zIndex: 1000,
         boxShadow: '2px 0 8px 0 rgba(29,35,41,.1)'
       }}
-      theme="light"
+      theme={theme}
       collapsed={isCollapse}
       collapsible
     >
       <Link to="/home">
         <div className="hd-64 mgr-01 dis-fl ai-ct jc-ct">
           <Image width={25} src={favicon} preview={false}/>
-          {<p style={{
+          {collapse ? '' : <p style={{
             fontWeight: 'bold',
             margin: '0 12px',
             fontSize: '20px',
@@ -46,7 +46,7 @@ const LeftMenu: React.FC = () => {
       <Spin wrapperClassName="side-menu" spinning={false} tip="Loading...">
         <Menu
           mode="inline"
-          theme="light"
+          theme={theme}
           items={
             [
               {
