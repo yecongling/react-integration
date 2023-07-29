@@ -126,7 +126,7 @@ const DesignCenter: React.FC = () => {
           <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
             <Search placeholder="输入编码、名称检索" enterButton onSearch={onSearchData}
                     style={{width: 'calc(100% - 40px)', marginRight: '6px'}}/>
-            <Button icon={<FormOutlined/>} title="编辑数据元"/>
+            <Button type="primary" icon={<FormOutlined/>} title="编辑数据元"/>
             <Row style={{height: 'calc(100% - 30px)'}}>
               <Col span={24}>
                 <Tabs
