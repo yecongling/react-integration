@@ -23,17 +23,14 @@ export const global = createSlice({
   // 定义reducer并生成关联的操作
   reducers: {
     setCollapse(state, {payload}) {
-      console.log(payload);
       state.collapse = payload.collapse
     },
 
     setTheme(state, {payload}) {
-      console.log(payload);
       state.theme = payload.theme
     },
 
     setColorPrimary(state, {payload}) {
-      console.log(payload);
       state.colorPrimary = payload.colorPrimary
     }
   }

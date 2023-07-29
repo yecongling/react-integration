@@ -1,9 +1,22 @@
 import React from "react";
-import {Col, Row} from "antd";
+import {Button, Col, Row} from "antd";
+import Page from "@/component/emr/editor/Footer/Page";
+import WordCount from "@/component/emr/editor/Footer/WordCount.tsx";
+import PageSize from "@/component/emr/editor/Footer/PageSize.tsx";
+
 const Footer: React.FC = () => {
   return (
-    <Row className="editor-footer" style={{height: '40px'}}>
-      <Col span={24} style={{height: '40px'}}>页数、字数、模式、放大缩小、全屏</Col>
+    <Row className="editor-footer" style={{height: '30px'}}>
+      <Col span={4} style={{height: '30px', display: 'flex', alignItems: 'center'}}>
+        <Page/>
+        <WordCount selected={2} total={10}/>
+      </Col>
+      <Col span={4} offset={6} style={{justifyContent: 'center', display: 'flex', alignItems: 'center'}}>
+        <Button type="text" size="small" onClick={() => alert("切换模式")}>编辑模式</Button>
+      </Col>
+      <Col span={4} offset={6} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <PageSize size={100}/>
+      </Col>
     </Row>
   )
 }

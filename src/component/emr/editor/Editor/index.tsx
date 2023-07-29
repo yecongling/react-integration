@@ -4,9 +4,10 @@ import {Col, Row} from "antd";
 const Editor: React.FC<EditorProps> = (props) => {
   const {width, height} = props;
   return (
-    <Row className="editor-container" style={{height: 'calc(100% - 150px)'}}>
+    <Row className="editor-container" style={{height: 'calc(100% - 132px)'}}>
       <Col span={24} style={{height: '100%'}}>
         <Row className="editor-content" style={{height: '100%'}}>
+          {/* 这里添加横竖两个标尺、大纲 */}
           <Col style={{
             backgroundColor: 'rgb(227 227 227 / 82%)',
             height: '100%',
