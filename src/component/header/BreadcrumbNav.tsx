@@ -1,5 +1,6 @@
 import React from "react";
 import {Breadcrumb} from "antd";
+import {Link} from "react-router-dom";
 
 const BreadcrumbNav: React.FC = () => {
   return (
@@ -9,12 +10,8 @@ const BreadcrumbNav: React.FC = () => {
           title: 'Location',
         },
         {
-          href: '/home',
-          title: '首页',
-        },
-        {
-          href: '',
-          title: 'Application List',
+          key: 'home',
+          title: <Link to="/home">首页</Link>,
         }
       ]} style={{
         marginLeft: '44px',
