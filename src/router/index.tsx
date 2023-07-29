@@ -13,7 +13,6 @@ const lazyLoad = (moduleName: string) => {
   } else {
     URL = `../pages/${moduleName}/index.tsx`;
   }
-  console.log(viteModule[`${URL}`])
   const Module = React.lazy(viteModule[`${URL}`] as any);
   return (
     <Module/>
@@ -35,6 +34,11 @@ const routes = [
         path: "emr",
         auth: false,
         component: lazyLoad('Emr').type
+      },
+      {
+        path: '*',
+        auth: false,
+        component: lazyLoad('404.tsx').type
       }
     ]
   },
@@ -42,11 +46,6 @@ const routes = [
     path: '/login',
     auth: false,
     component: lazyLoad('Login').type
-  },
-  {
-    path: '*',
-    auth: false,
-    component: lazyLoad('404.tsx').type
   }
 ]
 

@@ -9,9 +9,10 @@ const permission: Array<MockMethod> = [
     // 返回数据
     response: () => {
       return {
-        status: 200,
+        code: 200,
         message: 'success',
-        data: [
+        success: true,
+        result: [
           {
             "id": "11231",
             "name": "sys-home",
