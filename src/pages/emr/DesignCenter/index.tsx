@@ -1,7 +1,6 @@
 import React from "react";
 import type {TabsProps} from 'antd';
-import {Button, Card, Col, Row, Tabs} from "antd";
-import Search from "antd/lib/input/Search";
+import {Button, Card, Col, Input, Row, Tabs} from "antd";
 import ITree from "@/component/emr/ITree";
 import "./designer.less";
 import Designer from "@/component/emr/editor/Designer";
@@ -115,7 +114,7 @@ const DesignCenter: React.FC = () => {
         {/* 左边的栏分类带检索 */}
         <Col span={3} className="editor-category" style={{height: '100%'}}>
           <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
-            <Search autoFocus placeholder="通过名称检索" enterButton onSearch={onSearchEmr}/>
+            <Input.Search autoFocus placeholder="通过名称检索" enterButton onSearch={onSearchEmr}/>
             <ITree treeData={treeData} defaultExpandAll></ITree>
           </Card>
         </Col>
@@ -124,8 +123,8 @@ const DesignCenter: React.FC = () => {
         {/* 最右边的数据元区域 */}
         <Col span={4} className="editor-data" style={{height: '100%'}}>
           <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
-            <Search placeholder="输入编码、名称检索" enterButton onSearch={onSearchData}
-                    style={{width: 'calc(100% - 40px)', marginRight: '6px'}}/>
+            <Input.Search placeholder="输入编码、名称检索" enterButton onSearch={onSearchData}
+                          style={{width: 'calc(100% - 40px)', marginRight: '6px'}}/>
             <Button type="primary" icon={<FormOutlined/>} title="编辑数据元"/>
             <Row style={{height: 'calc(100% - 30px)'}}>
               <Col span={24}>
