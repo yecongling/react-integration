@@ -1,10 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit";
-import * as reducer from "./modules";
+import globalConfig from "@/store/modules/global";
 // configureStore 创建一个redux数据
 const store = configureStore({
   // 合并多个slice
   reducer: {
-    ...reducer
+    global: globalConfig
   }
 });
 export default store;
