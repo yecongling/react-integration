@@ -1,6 +1,6 @@
 import {useRoutes} from "react-router-dom";
 import React, {Suspense} from 'react'
-import {Spin} from "antd";
+import {Skeleton} from "antd";
 
 const lazyLoad = (moduleName: string) => {
   const viteModule = import.meta.glob('../**/*.tsx');
@@ -72,7 +72,7 @@ const generateRouter = (routers: any) => {
     if (item.children) {
       item.children = generateRouter(item.children)
     }
-    item.element = <Suspense fallback={<Spin size="large"/>}>
+    item.element = <Suspense fallback={<Skeleton/>}>
       <item.component/>
     </Suspense>;
     {/* 把懒加载的异步路由变成组件装载进去 */
