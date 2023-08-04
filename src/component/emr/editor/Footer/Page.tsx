@@ -7,9 +7,11 @@ import React from "react";
 const Page: React.FC<{ pageNo?: number, pageSize?: number }> = (props) => {
   const {pageNo, pageSize} = props;
   return (
+    <>
     <span style={{margin: '0 20px'}}>
       第{pageNo}页，共{pageSize}页
     </span>
+    </>
   )
 }
 

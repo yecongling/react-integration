@@ -1,5 +1,5 @@
 import React from "react";
-import {Pie, measureTextWidth} from '@ant-design/plots';
+import {measureTextWidth, Pie} from '@ant-design/plots';
 
 const PieChart: React.FC = () => {
   function renderStatistic(containerWidth: number, text: string, style: { fontSize: number; }) {
@@ -66,7 +66,9 @@ const PieChart: React.FC = () => {
     statistic: {
       title: {
         offsetY: -4,
-        customHtml: (container: { getBoundingClientRect: () => { width: any; height: any; }; }, _view: any, datum: { type: any; }) => {
+        customHtml: (container: { getBoundingClientRect: () => { width: any; height: any; }; }, _view: any, datum: {
+          type: any;
+        }) => {
           const {width, height} = container.getBoundingClientRect();
           const d = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
           const text = datum ? datum.type : '总计';
@@ -80,7 +82,9 @@ const PieChart: React.FC = () => {
         style: {
           fontSize: '32px',
         },
-        customHtml: (container: { getBoundingClientRect: () => { width: any; }; }, _view: any, datum: { value: any; }, data: any[]) => {
+        customHtml: (container: { getBoundingClientRect: () => { width: any; }; }, _view: any, datum: {
+          value: any;
+        }, data: any[]) => {
           const {width} = container.getBoundingClientRect();
           const text = datum ? `¥ ${datum.value}` : `¥ ${data.reduce((r, d) => r + d.value, 0)}`;
           return renderStatistic(width, text, {
@@ -103,6 +107,6 @@ const PieChart: React.FC = () => {
     ],
   };
   // @ts-ignore
-  return <Pie {...config} />;
+  return (<><Pie {...config} /></>);
 }
 export default PieChart;

@@ -1,6 +1,7 @@
 import React from "react";
 import {Col, Row, Tabs, TabsProps} from "antd";
 import "./toolbar.less";
+
 const Toolbar: React.FC = () => {
 
   /* 页签 */
@@ -37,11 +38,13 @@ const Toolbar: React.FC = () => {
     }
   ]
   return (
-    <Row className="editor-toolbar" style={{borderBottom: '1px solid #ccc'}}>
-      <Col span={24} style={{padding: '3px'}}>
-        <Tabs type="card" items={tabs} tabBarGutter={-1} className="tab-operator"/>
-      </Col>
-    </Row>
+    <>
+      <Row className="editor-toolbar" style={{borderBottom: '1px solid #ccc'}}>
+        <Col span={24} style={{padding: '3px'}}>
+          <Tabs type="card" items={tabs} tabBarGutter={-1} className="tab-operator"/>
+        </Col>
+      </Row>
+    </>
   )
 }
 export default Toolbar;

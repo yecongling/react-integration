@@ -7,9 +7,11 @@ import React from "react";
 const WordCount: React.FC<{ selected: number, total: number }> = (props) => {
   const {selected, total} = props;
   return (
+    <>
     <span>
       {selected === 0 ? '' : selected + '/'}{total}个字
     </span>
+    </>
   )
 }
 WordCount.defaultProps = {

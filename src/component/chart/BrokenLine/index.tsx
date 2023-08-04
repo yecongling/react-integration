@@ -257,6 +257,6 @@ const BrokenLine: React.FC = () => {
     },
   };
   // @ts-ignore
-  return <DualAxes {...config} />;
+  return (<><DualAxes {...config} /></>);
 }
 export default BrokenLine;

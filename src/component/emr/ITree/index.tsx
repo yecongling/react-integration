@@ -4,7 +4,9 @@ import {Tree} from "antd";
 
 const ITree: React.FC<TreeProps> = (props) => {
   return (
-    <Tree.DirectoryTree {...props} treeData={props.treeData} style={{marginTop: '6px'}}></Tree.DirectoryTree>
+    <>
+      <Tree.DirectoryTree {...props} treeData={props.treeData} style={{marginTop: '6px'}}></Tree.DirectoryTree>
+    </>
   )
 }
 ITree.defaultProps = {

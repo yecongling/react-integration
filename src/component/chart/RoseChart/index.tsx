@@ -38,7 +38,7 @@ const RoseChart: React.FC = ()=> {
       offset: -15,
     },
   };
-  return <Rose {...config} />;
+  return (<><Rose {...config} /></>);
 }
 
 export default RoseChart;
