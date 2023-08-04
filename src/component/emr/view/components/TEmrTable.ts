@@ -1,9 +1,8 @@
-import {TEmrCommandBase} from "@/component/emr/view/command/TEmrCommandBase";
+import {TEmrComponentsBase} from "@/component/emr/view/components/TEmrComponentsBase";
 
 /**
  * 表格组件
- *
  */
-export class TEmrTable extends TEmrCommandBase{
+export class TEmrTable extends TEmrComponentsBase{
 
 }
