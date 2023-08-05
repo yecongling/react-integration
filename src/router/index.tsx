@@ -36,6 +36,16 @@ const routes = [
         component: lazyLoad('system/Menu').type
       },
       {
+        path: "project/projectMaintain",
+        auth: false,
+        component: lazyLoad('project/ProjectMaintain').type
+      },
+      {
+        path: "project/projectMaintain/designer",
+        auth: false,
+        component: lazyLoad('project/ProjectMaintain/Designer').type
+      },
+      {
         path: "emr/designCenter",
         auth: false,
         component: lazyLoad('emr/DesignCenter').type
