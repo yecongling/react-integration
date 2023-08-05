@@ -1,18 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import type {TreeProps} from 'antd/es/tree';
 import {Tree} from "antd";
 
 const ITree: React.FC<TreeProps> = (props) => {
+  const {defaultSelectedKeys} = props;
+  const [selectedKey, setSelectedKey] = useState(defaultSelectedKeys);
   return (
     <>
-      <Tree.DirectoryTree {...props} treeData={props.treeData} style={{marginTop: '6px'}}></Tree.DirectoryTree>
+      <Tree {...props} treeData={props.treeData} selectedKeys={selectedKey} style={{marginTop: '6px'}}
+            onDoubleClick={(_a, b) => {
+              setSelectedKey([b.key]);
+              alert("选中的节点是：" + b.title)
+            }}></Tree>
     </>
   )
 }
 ITree.defaultProps = {
   showLine: true,
   defaultExpandParent: true,
-  treeData: []
+  treeData: [],
+  showIcon: true
 }
 
 export default ITree;

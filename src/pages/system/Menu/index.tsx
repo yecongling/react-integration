@@ -1,5 +1,20 @@
 import React, {useRef, useState} from "react";
-import {Button, Card, Col, Form, Input, InputNumber, Modal, Radio, Row, Select, Space, Switch, Table} from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  InputRef,
+  Modal,
+  Radio,
+  Row,
+  Select,
+  Space,
+  Switch,
+  Table
+} from "antd";
 import {ColumnsType} from "antd/es/table";
 import * as Icons from "@ant-design/icons";
 import {CheckCircleOutlined, CloseCircleOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
@@ -14,7 +29,7 @@ const Menu: React.FC = () => {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [menuData] = Form.useForm();
-  const inputRef = useRef(null);
+  const inputRef = useRef<InputRef>(null);
   const menuType = [
     {label: '一级菜单', value: 1},
     {label: '子菜单', value: 2},
@@ -26,7 +41,6 @@ const Menu: React.FC = () => {
 
   const handleAfterOpen = (open: boolean) => {
     if (open && inputRef.current) {
-      // @ts-ignore
       inputRef.current.focus();
     }
   }

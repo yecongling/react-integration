@@ -1,17 +1,44 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import type {TabsProps} from 'antd';
-import {Button, Card, Col, Input, Row, Tabs} from "antd";
+import {Button, Card, Col, Input, InputRef, Row, Tabs} from "antd";
 import ITree from "@/component/emr/ITree";
 import "./designer.less";
 import Designer from "@/component/emr/editor/Designer";
 import type {DataNode} from 'antd/es/tree';
-import {ExpandOutlined, FileOutlined, FolderOpenOutlined, FormOutlined} from "@ant-design/icons";
+import {ExpandOutlined, FileOutlined, FolderOpenOutlined, FormOutlined, MenuFoldOutlined} from "@ant-design/icons";
 import {useSelector} from "react-redux";
+import MetaData from "@/component/emr/dataset/MetaData";
 
 const DesignCenter: React.FC = () => {
   const {colorPrimary} = useSelector((store: any) => store.global);
+  const searchMetaRef = useRef<InputRef>(null);
+  const [openMetaData, setOpenMetaData] = useState(false);
   const onSearchEmr = (value: string) => {
     console.log(value);
+  }
+
+  /**
+   * tab点击的时候
+   * @param activeKey
+   */
+  const onTabChange = (activeKey: string) => {
+    if (activeKey === "meta" && searchMetaRef != null && searchMetaRef.current != null) {
+      searchMetaRef.current.focus();
+    }
+  }
+
+  /**
+   * 编辑数据元
+   */
+  const editMetaData = () => {
+    setOpenMetaData(true);
+  }
+
+  /**
+   * 关闭弹窗
+   */
+  const onCancel = () => {
+    setOpenMetaData(false);
   }
 
   /**
@@ -93,7 +120,12 @@ const DesignCenter: React.FC = () => {
     {
       key: "meta",
       label: "数据元",
-      children: <ITree treeData={emrMetaData} defaultExpandAll/>
+      children: <>
+        <Input.Search ref={searchMetaRef} placeholder="输入编码、名称检索" enterButton onSearch={onSearchData}
+                      style={{width: 'calc(100% - 40px)', marginRight: '6px'}}/>
+        <Button type="primary" icon={<FormOutlined/>} onClick={editMetaData} title="编辑数据元"/>
+        <ITree treeData={emrMetaData} defaultExpandAll/>
+      </>
     },
     {
       key: "event",
@@ -112,10 +144,12 @@ const DesignCenter: React.FC = () => {
       {/*大区域（包含编辑器的编辑区域）*/}
       <Row className="editor-panel" style={{width: '100%', height: 'calc(100%)'}} gutter={6}>
         {/* 左边的栏分类带检索 */}
-        <Col span={3} className="editor-category" style={{height: '100%'}}>
+        <Col span={4} className="editor-category" style={{height: '100%'}}>
           <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
-            <Input.Search autoFocus placeholder="通过名称检索" enterButton onSearch={onSearchEmr}/>
-            <ITree treeData={treeData} defaultExpandAll></ITree>
+            <Input.Search autoFocus placeholder="通过名称检索" enterButton
+                          style={{width: 'calc(100% - 40px)', marginRight: '6px'}} onSearch={onSearchEmr}/>
+            <Button type="primary" icon={<MenuFoldOutlined/>} title="收缩展开"/>
+            <ITree treeData={treeData} defaultExpandAll defaultSelectedKeys={["00003"]}></ITree>
           </Card>
         </Col>
         {/* 中间编辑区 */}
@@ -123,10 +157,7 @@ const DesignCenter: React.FC = () => {
         {/* 最右边的数据元区域 */}
         <Col span={4} className="editor-data" style={{height: '100%'}}>
           <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
-            <Input.Search placeholder="输入编码、名称检索" enterButton onSearch={onSearchData}
-                          style={{width: 'calc(100% - 40px)', marginRight: '6px'}}/>
-            <Button type="primary" icon={<FormOutlined/>} title="编辑数据元"/>
-            <Row style={{height: 'calc(100% - 30px)'}}>
+            <Row style={{height: '100%'}}>
               <Col span={24}>
                 <Tabs
                   tabPosition="bottom"
@@ -135,12 +166,14 @@ const DesignCenter: React.FC = () => {
                   defaultActiveKey="meta"
                   tabBarGutter={-1}
                   className="tab-metadata"
+                  onChange={onTabChange}
                 />
               </Col>
             </Row>
           </Card>
         </Col>
       </Row>
+      <MetaData width={800} open={openMetaData} onCancel={onCancel}/>
     </>
   )
 }

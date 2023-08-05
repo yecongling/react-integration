@@ -26,6 +26,6 @@ const Designer: React.FC<DesignerProps> = (props) => {
 }
 
 Designer.defaultProps = {
-  span: 17
+  span: 16
 }
 export default Designer;
