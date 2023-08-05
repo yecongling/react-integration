@@ -1,8 +1,51 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import {Col, Row} from "antd";
 
 const Editor: React.FC<EditorProps> = (props) => {
   const {width, height} = props;
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    if (canvasRef != null && canvasRef.current != null) {
+      const ctx = canvasRef.current.getContext("2d");
+      if (ctx == null) {
+        return;
+      }
+      const width = canvasRef.current.width
+      const height = canvasRef.current.height
+      const margins = [100, 120, 100, 120];
+      const marginIndicatorSize = 35;
+      ctx.save()
+      ctx.translate(0.5, 0.5)
+      ctx.strokeStyle = "#BABABA";
+      ctx.beginPath()
+      const leftTopPoint: [number, number] = [margins[3], margins[0]]
+      const rightTopPoint: [number, number] = [width - margins[1], margins[0]]
+      const leftBottomPoint: [number, number] = [margins[3], height - margins[2]]
+      const rightBottomPoint: [number, number] = [width - margins[1], height - margins[2]]
+      // 上左
+      ctx.moveTo(leftTopPoint[0] - marginIndicatorSize, leftTopPoint[1])
+      ctx.lineTo(...leftTopPoint)
+      ctx.lineTo(leftTopPoint[0], leftTopPoint[1] - marginIndicatorSize)
+      // 上右
+      ctx.moveTo(rightTopPoint[0] + marginIndicatorSize, rightTopPoint[1])
+      ctx.lineTo(...rightTopPoint)
+      ctx.lineTo(rightTopPoint[0], rightTopPoint[1] - marginIndicatorSize)
+      // 下左
+      ctx.moveTo(leftBottomPoint[0] - marginIndicatorSize, leftBottomPoint[1])
+      ctx.lineTo(...leftBottomPoint)
+      ctx.lineTo(leftBottomPoint[0], leftBottomPoint[1] + marginIndicatorSize)
+      // 下右
+      ctx.moveTo(rightBottomPoint[0] + marginIndicatorSize, rightBottomPoint[1])
+      ctx.lineTo(...rightBottomPoint)
+      ctx.lineTo(rightBottomPoint[0], rightBottomPoint[1] + marginIndicatorSize)
+      ctx.stroke()
+      ctx.restore()
+
+      ctx.font = "28px 宋体";
+      ctx.fillText("这只是一个示例的canvas", 120, 120);
+    }
+  }, [])
+
   return (
     <>
       <Row className="editor-container" style={{height: 'calc(100% - 132px)'}}>
@@ -29,22 +72,7 @@ const Editor: React.FC<EditorProps> = (props) => {
                 height: height + 'px',
                 boxShadow: '#9ea1a566 0 2px 12px'
               }}>
-                <canvas className="kix-canvas-tile-content" width={width} height={height}
-                        style={{
-                          zIndex: 0,
-                          backgroundColor: 'rgb(249, 251, 253)',
-                          cursor: 'text'
-                        }} dir="ltr"></canvas>
-              </div>
-              <div className="kix-page-paginated canvas-second-page" style={{
-                position: 'relative',
-                marginBottom: '20px',
-                zIndex: 0,
-                width: width + 'px',
-                height: height + 'px',
-                boxShadow: '#9ea1a566 0 2px 12px'
-              }}>
-                <canvas className="kix-canvas-tile-content" width={width} height={height}
+                <canvas ref={canvasRef} className="kix-canvas-tile-content" width={width} height={height}
                         style={{
                           zIndex: 0,
                           backgroundColor: 'rgb(249, 251, 253)',
