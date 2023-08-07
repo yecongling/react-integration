@@ -263,7 +263,6 @@ const ProjectMaintain: React.FC = () => {
         </Space>
         <Table
           style={{marginTop: '6px'}}
-          scroll={{x: 1500, y: 300}}
           bordered
           size="middle"
           columns={columns}

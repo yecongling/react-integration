@@ -12,6 +12,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   SearchOutlined,
+  SettingOutlined,
   SyncOutlined,
   UserOutlined
 } from "@ant-design/icons";
@@ -19,7 +20,7 @@ import avatar from "@/assets/images/avatar.png";
 import BreadcrumbNav from "@/component/header/BreadcrumbNav";
 import FullScreen from "@/component/header/FullScreen";
 import {useNavigate} from "react-router-dom";
-import Setting from "@/component/header/Setting.tsx";
+/*import Setting from "@/component/header/Setting.tsx";*/
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,11 @@ const Header: React.FC = () => {
     },
     {
       key: '4',
+      label: '系统设置',
+      icon: <SettingOutlined/>
+    },
+    {
+      key: '5',
       label: '退出登录',
       icon: <LogoutOutlined/>,
       disabled: false,
@@ -130,7 +136,7 @@ const Header: React.FC = () => {
           </Space>
         </div>
       </Layout.Header>
-      <Setting/>
+      {/*<Setting/>*/}
       {contextHolder}
     </>
   )
