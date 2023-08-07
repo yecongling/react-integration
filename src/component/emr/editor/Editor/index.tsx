@@ -41,8 +41,8 @@ const Editor: React.FC<EditorProps> = (props) => {
       ctx.stroke()
       ctx.restore()
 
-      ctx.font = "28px 宋体";
-      ctx.fillText("这只是一个示例的canvas", 120, 120);
+      ctx.font = "20px 宋体";
+      ctx.fillText("这只是一个示例的canvas（目前暂停该功能继续开发）", 120, 120);
     }
   }, [])
 
