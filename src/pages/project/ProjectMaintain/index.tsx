@@ -14,6 +14,7 @@ import {ColumnsType} from "antd/es/table";
 import {Project} from "./Project";
 import "./index.less";
 import {useNavigate} from "react-router-dom";
+import {getAllProject} from "@/services/system/project/projectMaintain/projectMaintain.ts";
 
 const ProjectMaintain: React.FC = () => {
   const [searchForm] = Form.useForm();
@@ -21,21 +22,23 @@ const ProjectMaintain: React.FC = () => {
   const [projectType, setProjectType] = useState(false);
   const [editInfo, setEditInfo] = useState({title: '集成', opr: '创建新的', projectType: '1'});
   const [isEdit, setIsEdit] = useState(false);
+  const [projectSource, setProjectSource] = useState<Project[]>([]);
   const [projectData] = Form.useForm();
   const projectName = useRef(null);
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    onSearch();
+    onSearch(searchForm.getFieldsValue());
   }, [])
 
   /**
    * 检索
    *
    */
-  const onSearch = () => {
-    console.log('检索');
+  const onSearch = async (value: any) => {
+    const resource = await getAllProject(value);
+    setProjectSource(resource);
   }
 
   /**
@@ -128,7 +131,6 @@ const ProjectMaintain: React.FC = () => {
       dataIndex: 'status',
       width: '5%',
       align: 'center',
-      key: 'status',
       render: function (text) {
         return text === '1' ? <Switch defaultChecked/> : <Switch/>;
       }
@@ -138,7 +140,6 @@ const ProjectMaintain: React.FC = () => {
       dataIndex: 'warning',
       width: '5%',
       align: 'center',
-      key: 'warning',
       render: function (text) {
         return <QuestionCircleOutlined style={{color: text ? 'orange' : 'gray'}}/>;
       }
@@ -148,7 +149,6 @@ const ProjectMaintain: React.FC = () => {
       dataIndex: 'projectName',
       width: '15%',
       align: 'left',
-      key: 'projectName',
       sorter: true,
       ellipsis: true,
       render: function (text, record) {
@@ -163,27 +163,24 @@ const ProjectMaintain: React.FC = () => {
     },
     {
       title: "优先级",
-      dataIndex: 'level',
+      dataIndex: 'projectPriority',
       width: '4%',
       align: 'left',
-      key: 'level',
       defaultSortOrder: 'descend',
-      sorter: (a, b) => a.level - b.level,
+      sorter: (a, b) => a.projectPriority - b.projectPriority,
     },
     {
       title: "描述",
       dataIndex: 'description',
       width: '16%',
       align: 'left',
-      ellipsis: true,
-      key: 'description'
+      ellipsis: true
     },
     {
       title: "类型",
       dataIndex: 'type',
       width: '5%',
       align: 'center',
-      key: 'type',
       render: function () {
         return <FullscreenOutlined/>;
       }
@@ -193,7 +190,6 @@ const ProjectMaintain: React.FC = () => {
       dataIndex: 'chart',
       width: '5%',
       align: 'center',
-      key: 'chart',
       render: function () {
         return <FullscreenOutlined/>;
       }
@@ -220,31 +216,6 @@ const ProjectMaintain: React.FC = () => {
     },
   ];
 
-  const data: Project[] = [
-    {
-      id: '1234123',
-      key: '1234123',
-      status: '1',
-      warning: true,
-      projectName: '测试项目',
-      level: 5,
-      description: '测试项目',
-      type: 1,
-      chart: 2
-    },
-    {
-      id: '23423',
-      key: '23423',
-      status: '2',
-      warning: false,
-      projectName: 'HIS服务',
-      level: 2,
-      description: 'HIS服务',
-      type: 2,
-      chart: 1
-    }
-  ];
-
   return (
     <>
       {/* 查询区域 */}
@@ -259,13 +230,13 @@ const ProjectMaintain: React.FC = () => {
             <Col span={6}>
               <Form.Item label="项目类型" name="type" style={{marginBottom: 0}}>
                 <Select options={[
-                  {value: '-1', label: '请选择……'},
+                  {value: '-1', label: '全部'},
                   {value: '0', label: '集成项目'},
                   {value: '1', label: '接口项目'}
                 ]}/>
               </Form.Item>
             </Col>
-            <Col span={4}>
+            <Col span={12}>
               <Button type="primary" htmlType="submit"><SearchOutlined/>查询</Button>
               <Button htmlType="reset" style={{margin: '0 8px'}}><SyncOutlined/>重置</Button>
             </Col>
@@ -281,7 +252,7 @@ const ProjectMaintain: React.FC = () => {
           bordered
           size="middle"
           columns={columns}
-          dataSource={data}
+          dataSource={projectSource}
         />
       </Card>
 

@@ -1,11 +1,11 @@
 /* 定义项目的字段类型 */
 export interface Project {
   key: string;
-  id: string;
+  projectId: string;
   status: string;
   warning: boolean;
   projectName: string;
-  level: number;
+  projectPriority: number;
   log?: number;
   description?: string;
   type: number;
