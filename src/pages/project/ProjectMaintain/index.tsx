@@ -145,7 +145,17 @@ const ProjectMaintain: React.FC = () => {
       width: '15%',
       align: 'left',
       key: 'projectName',
-      sorter: true
+      sorter: true,
+      ellipsis: true,
+      render: function (text, record) {
+        return (
+          <>
+            <a type="link" onClick={() => {
+              navigate('/project/projectMaintain/designer', {state: record});
+            }}>{text}</a>
+          </>
+        )
+      }
     },
     {
       title: "优先级",
@@ -161,6 +171,7 @@ const ProjectMaintain: React.FC = () => {
       dataIndex: 'description',
       width: '16%',
       align: 'left',
+      ellipsis: true,
       key: 'description'
     },
     {
