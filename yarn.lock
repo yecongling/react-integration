@@ -1824,10 +1824,10 @@ ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-antd@^5.8.1:
-  version "5.8.1"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-5.8.1.tgz#4d3ce5f985c447eeeca470315a6e3aa0f3de4c76"
-  integrity sha512-6BEc6QDLzk01RrUjzIQ50oW2+mpscfBU1tusECi4OwEKgZmvmaW8ErvEDWtTHezIdr7dEMOEJlOZaOl8eXuaIw==
+antd@^5.8.2:
+  version "5.8.2"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-5.8.2.tgz#1ebaa11f601f13598badc8ba9511e002b33661b5"
+  integrity sha512-kkC2BSBde1JzJxk2wNYj/NXgNZQZ2yu6avJoCKleSi32nsjiadi7FFu1AyGxIzoJ9CrxoLacjGvrwbKJQ6kCvw==
   dependencies:
     "@ant-design/colors" "^7.0.0"
     "@ant-design/cssinjs" "^1.16.0"
@@ -2093,6 +2093,11 @@ cliui@^2.1.0:
     center-align "^0.1.1"
     right-align "^0.1.1"
     wordwrap "0.0.2"
+
+clsx@^1.1.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
 color-convert@^1.9.0, color-convert@^1.9.3:
   version "1.9.3"
@@ -4103,7 +4108,7 @@ probe.gl@^3.1.1:
     "@probe.gl/log" "3.6.0"
     "@probe.gl/stats" "3.6.0"
 
-prop-types@^15.5.10:
+prop-types@^15.5.10, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -4601,6 +4606,14 @@ react-dom@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-draggable@^4.4.5:
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.4.5.tgz#9e37fe7ce1a4cf843030f521a0a4cc41886d7e7c"
+  integrity sha512-OMHzJdyJbYTZo4uQE393fHcqqPYsEtkjfMgvCHr6rejT+Ezn4OZbNyGH50vv+SunC1RMvwOTSWkEODQLzw1M9g==
+  dependencies:
+    clsx "^1.1.1"
+    prop-types "^15.8.1"
 
 react-icons@^4.10.1:
   version "4.10.1"
