@@ -49,7 +49,11 @@ const ProjectMaintain: React.FC = () => {
    * 保存数据
    */
   const handleOk = () => {
-    navigate('/project/projectMaintain/designer');
+    // 先完成数据存储操作
+    if (!isEdit) {
+      // 如果是新增，则新增完成就跳转到设计界面
+      navigate('/project/projectMaintain/designer');
+    }
   }
 
   /**
