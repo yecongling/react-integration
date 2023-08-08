@@ -5,9 +5,9 @@ import {ColumnsType} from "antd/es/table";
 import {Project} from "./Project";
 import "./index.less";
 import {useNavigate} from "react-router-dom";
-import {getAllProject} from "@/services/system/project/projectMaintain/projectMaintain.ts";
-import ProjectType from "@/pages/project/ProjectMaintain/components/ProjectType.tsx";
-import ProjectInfo from "@/pages/project/ProjectMaintain/components/ProjectInfo.tsx";
+import {getAllProject} from "@/services/system/project/projectMaintain/projectMaintain";
+import ProjectTypeModal from "@/pages/project/ProjectMaintain/components/ProjectTypeModal";
+import ProjectInfoModal from "@/pages/project/ProjectMaintain/components/ProjectInfoModal";
 
 const ProjectMaintain: React.FC = () => {
   const [searchForm] = Form.useForm();
@@ -213,11 +213,11 @@ const ProjectMaintain: React.FC = () => {
       </Card>
 
       {/* 选择项目类型 */}
-      <ProjectType projectType={projectType} setProjectType={setProjectType}
-                   changeModal={changeModal} projectName={projectName}/>
+      <ProjectTypeModal projectType={projectType} setProjectType={setProjectType}
+                        changeModal={changeModal} projectName={projectName}/>
       {/* 编辑弹窗 */}
-      <ProjectInfo open={open} setOpen={setOpen} isEdit={isEdit} changeModal={changeModal} projectName={projectName}
-                   editInfo={editInfo} projectData={projectData}/>
+      <ProjectInfoModal open={open} setOpen={setOpen} isEdit={isEdit} changeModal={changeModal} projectName={projectName}
+                        editInfo={editInfo} projectData={projectData}/>
     </>
   );
 }

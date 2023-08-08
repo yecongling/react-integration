@@ -8,7 +8,7 @@ import {ProjectTypeProps} from "@/pages/project/ProjectMaintain/components/Proje
  *
  * @constructor
  */
-const ProjectType: React.FC<ProjectTypeProps> = (props) => {
+const ProjectTypeModal: React.FC<ProjectTypeProps> = (props) => {
   const {projectType, setProjectType, changeModal, projectName} = props;
   /**
    * 窗口打开关闭
@@ -71,4 +71,4 @@ const ProjectType: React.FC<ProjectTypeProps> = (props) => {
     </>
   )
 }
-export default ProjectType;
+export default ProjectTypeModal;

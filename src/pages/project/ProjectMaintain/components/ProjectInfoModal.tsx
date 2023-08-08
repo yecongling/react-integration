@@ -4,7 +4,7 @@ import {ArrowLeftOutlined, CheckCircleOutlined, CloseCircleOutlined} from "@ant-
 import {useNavigate} from "react-router-dom";
 import {ProjectInfoProps} from "@/pages/project/ProjectMaintain/components/ProjectState.ts";
 
-const ProjectInfo: React.FC<ProjectInfoProps> = (props) => {
+const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
   const inputRef = useRef<InputRef>(null);
   const navigate = useNavigate();
   const {open, setOpen, isEdit, changeModal, projectName, editInfo, projectData} = props;
@@ -107,4 +107,4 @@ const ProjectInfo: React.FC<ProjectInfoProps> = (props) => {
     </>
   )
 }
-export default ProjectInfo;
+export default ProjectInfoModal;
