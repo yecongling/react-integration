@@ -6,7 +6,7 @@ import favicon from "@/assets/images/favicon.png";
 import {Image, Menu, MenuProps, Spin} from "antd";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import SvgIcon from "@/component/SvgIcon";
+import SvgIcon from "@/components/SvgIcon";
 import {RouteItem} from "@/services/system/permission/menuModel";
 import {getOpenKeys, handleRouter} from "@/utils/util.ts";
 import {getMenuList} from "@/services/system/permission/permission.ts";

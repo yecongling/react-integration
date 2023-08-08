@@ -1,8 +1,8 @@
 import React from "react";
 import {Button, Col, Row} from "antd";
-import Page from "@/component/emr/editor/Footer/Page";
-import WordCount from "@/component/emr/editor/Footer/WordCount.tsx";
-import PageSize from "@/component/emr/editor/Footer/PageSize.tsx";
+import Page from "@/components/emr/editor/Footer/Page";
+import WordCount from "@/components/emr/editor/Footer/WordCount.tsx";
+import PageSize from "@/components/emr/editor/Footer/PageSize.tsx";
 
 const Footer: React.FC = () => {
   return (

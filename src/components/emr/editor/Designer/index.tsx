@@ -1,8 +1,8 @@
 import React from "react";
 import {Card, Col} from "antd";
-import Toolbar from "@/component/emr/editor/Toolbar";
-import Editor from "@/component/emr/editor/Editor";
-import Footer from "@/component/emr/editor/Footer";
+import Toolbar from "@/components/emr/editor/Toolbar";
+import Editor from "@/components/emr/editor/Editor";
+import Footer from "@/components/emr/editor/Footer";
 
 /**
  * 病历设计器

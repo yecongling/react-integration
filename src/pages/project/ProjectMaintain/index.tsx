@@ -1,20 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Button, Card, Col, Form, Input, Modal, Row, Select, Space, Switch, Table} from "antd";
-import {
-  ArrowLeftOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  CompressOutlined,
-  FullscreenOutlined,
-  QuestionCircleOutlined,
-  SearchOutlined,
-  SyncOutlined
-} from "@ant-design/icons";
+import {Button, Card, Col, Form, Input, InputRef, Row, Select, Space, Switch, Table} from "antd";
+import {FullscreenOutlined, QuestionCircleOutlined, SearchOutlined, SyncOutlined} from "@ant-design/icons";
 import {ColumnsType} from "antd/es/table";
 import {Project} from "./Project";
 import "./index.less";
 import {useNavigate} from "react-router-dom";
 import {getAllProject} from "@/services/system/project/projectMaintain/projectMaintain.ts";
+import ProjectType from "@/pages/project/ProjectMaintain/components/ProjectType.tsx";
+import ProjectInfo from "@/pages/project/ProjectMaintain/components/ProjectInfo.tsx";
 
 const ProjectMaintain: React.FC = () => {
   const [searchForm] = Form.useForm();
@@ -24,8 +17,7 @@ const ProjectMaintain: React.FC = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [projectSource, setProjectSource] = useState<Project[]>([]);
   const [projectData] = Form.useForm();
-  const projectName = useRef(null);
-  const inputRef = useRef(null);
+  const projectName = useRef<InputRef>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,17 +38,6 @@ const ProjectMaintain: React.FC = () => {
    */
   const addProject = () => {
     setProjectType(true);
-  }
-
-  /**
-   * 保存数据
-   */
-  const handleOk = () => {
-    // 先完成数据存储操作
-    if (!isEdit) {
-      // 如果是新增，则新增完成就跳转到设计界面
-      navigate('/project/projectMaintain/designer');
-    }
   }
 
   /**
@@ -89,7 +70,6 @@ const ProjectMaintain: React.FC = () => {
     setIsEdit(false);
   }
 
-
   /**
    * 编辑项目
    */
@@ -100,30 +80,6 @@ const ProjectMaintain: React.FC = () => {
     setOpen(true);
   }
 
-  /**
-   * 窗口打开关闭
-   * @param open
-   */
-  const handleAfterOpen = (open: boolean) => {
-    if (open) {
-      if (inputRef.current) {
-        // @ts-ignore
-        inputRef.current.focus();
-      }
-      return;
-    }
-    if (projectName.current) {
-      //@ts-ignore
-      projectName.current.focus();
-    }
-  }
-
-  /**
-   * 关闭弹窗
-   */
-  const onCancel = () => {
-    setOpen(false);
-  }
 
   const columns: ColumnsType<Project> = [
     {
@@ -257,107 +213,11 @@ const ProjectMaintain: React.FC = () => {
       </Card>
 
       {/* 选择项目类型 */}
-      <Modal open={projectType}
-             centered
-             maskClosable={false}
-             title="选择项目类型"
-             width={600}
-             footer={[
-               <Button key="cancel" type="default" onClick={() => {
-                 setProjectType(false)
-               }}>取消</Button>
-             ]}
-      >
-        <Row align="middle">
-          <Col span={12} style={{textAlign: 'center', padding: '16px 6px'}} className="projectType"
-               onClick={() => changeModal("2")}>
-            <CompressOutlined style={{fontSize: '64px', color: '#5b5858'}}/>
-            <h3>集成项目</h3>
-            <span style={{color: '#989292', fontSize: '12px'}}>系统间消息集成，保证传输</span>
-            <ul className="description">
-              <li>记录消息内容以及处理流程</li>
-              <li>保证消息传输以及消息顺序</li>
-              <li>支持消息重新处理</li>
-              <li>终端和路由可单独开关</li>
-              <li>终端可以在不同项目中复用</li>
-            </ul>
-          </Col>
-          <Col span={12} style={{textAlign: 'center', padding: '16px 6px'}} className="projectType"
-               onClick={() => changeModal("1")}>
-            <FullscreenOutlined style={{fontSize: '64px', color: '#5b5858'}}/>
-            <h3>接口项目</h3>
-            <span style={{color: '#989292', fontSize: '12px'}}>高性能请求应答（request-response）模式</span>
-            <ul className="description">
-              <li>高性能路由处理</li>
-              <li>消息内容以及处理流程记录可选择性开关</li>
-              <li>同步消息处理、支持事务</li>
-              <li>终端及路由以项目味单位统一开关</li>
-              <li>终端不可和其他项目共享</li>
-            </ul>
-          </Col>
-        </Row>
-
-      </Modal>
+      <ProjectType projectType={projectType} setProjectType={setProjectType}
+                   changeModal={changeModal} projectName={projectName}/>
       {/* 编辑弹窗 */}
-      <Modal open={open}
-             centered
-             maskClosable={false}
-             title={<> {!isEdit && <Button size="middle" style={{marginRight: '12px'}} icon={<ArrowLeftOutlined/>}
-                                           onClick={() => changeModal("3")}></Button>}
-               <span className="title">{editInfo.opr}{editInfo.title}项目</span></>}
-             okText="确认"
-             okButtonProps={{icon: <CheckCircleOutlined/>}}
-             cancelButtonProps={{icon: <CloseCircleOutlined/>}}
-             cancelText="取消"
-             style={{top: '20px'}}
-             width={800}
-             onOk={() => {
-               projectData.validateFields().then(() => {
-                 projectData.resetFields();
-                 handleOk();
-               });
-             }}
-             onCancel={onCancel}
-             afterOpenChange={handleAfterOpen}
-             bodyStyle={{padding: '10px 40px'}}
-      >
-        <Form
-          form={projectData}
-          layout="horizontal"
-          name="basic"
-          size="middle"
-          labelCol={{span: 4}}
-          initialValues={{
-            level: '0',
-            log: '1'
-          }}
-        >
-          <Form.Item name="projectName" label="项目名称" rules={[{required: true, message: '请输入项目名称'}]}>
-            <Input ref={inputRef} placeholder="项目名称"/>
-          </Form.Item>
-          <Form.Item name="description" label="描述">
-            <Input.TextArea rows={4} placeholder="描述"/>
-          </Form.Item>
-          {editInfo.projectType === '1' ?
-            <Form.Item name="log" label="消息日志记录">
-              <Select options={[
-                {value: '1', label: '打开'},
-                {value: '2', label: '关闭'},
-                {value: '3', label: '仅在发生错误是记录'}
-              ]}/>
-            </Form.Item> : ''}
-          <Form.Item name="level" label="优先级" rules={[{required: true, message: '请输入项目名称'}]}>
-            <Select placeholder="项目名称" options={[
-              {value: '0', label: '0'},
-              {value: '1', label: '1'},
-              {value: '2', label: '2'},
-              {value: '3', label: '3'},
-              {value: '4', label: '4'},
-              {value: '5', label: '5'},
-            ]}/>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <ProjectInfo open={open} setOpen={setOpen} isEdit={isEdit} changeModal={changeModal} projectName={projectName}
+                   editInfo={editInfo} projectData={projectData}/>
     </>
   );
 }

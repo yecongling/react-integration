@@ -1,13 +1,13 @@
 import React, {useRef, useState} from "react";
 import type {TabsProps} from 'antd';
 import {Button, Card, Col, Input, InputRef, Row, Tabs} from "antd";
-import ITree from "@/component/emr/ITree";
+import ITree from "@/components/emr/ITree";
 import "./designer.less";
-import Designer from "@/component/emr/editor/Designer";
+import Designer from "@/components/emr/editor/Designer";
 import type {DataNode} from 'antd/es/tree';
 import {ExpandOutlined, FileOutlined, FolderOpenOutlined, FormOutlined, MenuFoldOutlined} from "@ant-design/icons";
 import {useSelector} from "react-redux";
-import MetaData from "@/component/emr/dataset/MetaData";
+import MetaData from "@/components/emr/dataset/MetaData";
 
 const DesignCenter: React.FC = () => {
   const {colorPrimary} = useSelector((store: any) => store.global);

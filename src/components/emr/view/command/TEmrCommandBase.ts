@@ -1,4 +1,4 @@
-import {TObject} from "@/component/emr/view/core/TObject";
+import {TObject} from "@/components/emr/view/core/TObject";
 
 /**
  * 命令基类

@@ -17,8 +17,8 @@ import {
   UserOutlined
 } from "@ant-design/icons";
 import avatar from "@/assets/images/avatar.png";
-import BreadcrumbNav from "@/component/header/BreadcrumbNav";
-import FullScreen from "@/component/header/FullScreen";
+import BreadcrumbNav from "@/components/header/BreadcrumbNav";
+import FullScreen from "@/components/header/FullScreen";
 import {useNavigate} from "react-router-dom";
 /*import Setting from "@/component/header/Setting.tsx";*/
 

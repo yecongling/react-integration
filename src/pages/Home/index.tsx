@@ -1,10 +1,10 @@
 import React from "react";
 import {Card, Col, Image, Progress, Row} from "antd";
 import './index.less';
-import BrokenLine from "@/component/chart/BrokenLine";
-import RoseChart from "@/component/chart/RoseChart";
+import BrokenLine from "@/components/chart/BrokenLine";
+import RoseChart from "@/components/chart/RoseChart";
 import NoNetwork from "@/assets/svg/NoNetwork.svg";
-import PieChart from "@/component/chart/PieChart";
+import PieChart from "@/components/chart/PieChart";
 
 const Index: React.FC = () => {
 

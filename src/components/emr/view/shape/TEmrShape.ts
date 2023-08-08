@@ -1,4 +1,4 @@
-import {TEmrCursors} from "@/component/emr/view/enums/TEmrCursors";
+import {TEmrCursors} from "@/components/emr/view/enums/TEmrCursors";
 
 /**
  * 形状基类
