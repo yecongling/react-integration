@@ -12,7 +12,7 @@ const RouterBeforeEach: React.FC = () => {
     // if (obj && obj.auth && blLogin == 'false') {
     //   navigate('/login', {replace: true})
     // } else {
-      navigate("project/projectMaintain");
+      navigate("system/menu");
     // }
   }, [])
   return <Outlet/>

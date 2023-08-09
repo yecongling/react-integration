@@ -607,6 +607,23 @@ const permission: Array<MockMethod> = [
         ]
       }
     }
+  },
+  {
+    // 接口路径
+    url: '/api/sys/permission/getDirectoryPermission',
+    // 接口方法
+    method: 'get',
+    // 返回数据
+    response: () => {
+      return {
+        code: 200,
+        message: 'success',
+        success: true,
+        result: [
+
+        ]
+      }
+    }
   }
 ]
 

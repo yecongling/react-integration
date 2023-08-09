@@ -39,11 +39,7 @@ export const getAllPermission = (params: any) => {
  * 获取上级菜单
  */
 export const getDirectoryPermission = () => {
-  return new Promise((resolve) => {
-    defHttp.post<directoryResult>({url: Api.getDirectoryPermission}).then((res) => {
-      resolve(res);
-    })
-  })
+    return defHttp.post<directoryResult>({url: Api.getDirectoryPermission});
 }
 
 /**

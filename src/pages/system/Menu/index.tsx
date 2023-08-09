@@ -1,24 +1,11 @@
-import React, {useRef, useState} from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  InputRef,
-  Modal,
-  Radio,
-  Row,
-  Select,
-  Space,
-  Switch,
-  Table
-} from "antd";
+import React, {useState} from "react";
+import {Button, Card, Col, Form, Input, Row, Select, Space, Table} from "antd";
 import {ColumnsType} from "antd/es/table";
 import * as Icons from "@ant-design/icons";
-import {CheckCircleOutlined, CloseCircleOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
+import {PlusOutlined} from "@ant-design/icons";
 import './menu.less';
+import MenuInfoModal from "@/pages/system/Menu/components/MenuInfoModal";
+import {permission} from "@/services/system/permission/menuModel.ts";
 
 /**
  * 菜单维护界面
@@ -29,7 +16,7 @@ const Menu: React.FC = () => {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [menuData] = Form.useForm();
-  const inputRef = useRef<InputRef>(null);
+
   const menuType = [
     {label: '一级菜单', value: 1},
     {label: '子菜单', value: 2},
@@ -39,11 +26,6 @@ const Menu: React.FC = () => {
     alert(value);
   }
 
-  const handleAfterOpen = (open: boolean) => {
-    if (open && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }
 
   /**
    * 编辑
@@ -75,6 +57,15 @@ const Menu: React.FC = () => {
    */
   const onCancel = () => {
     setOpen(false);
+  }
+
+  /**
+   * 字段校验
+   *
+   * @param values
+   */
+  const handleOk = async (values: permission) => {
+    console.log(values)
   }
 
   interface menuType {
@@ -280,7 +271,6 @@ const Menu: React.FC = () => {
         <Table
           style={{marginTop: '6px'}}
           className="table"
-          scroll={{x: 'max-content', y: 'calc(100vh - 400px)'}}
           bordered
           size="middle"
           columns={columns}
@@ -288,63 +278,7 @@ const Menu: React.FC = () => {
         />
       </Card>
       {/* 编辑弹窗 */}
-      <Modal open={open}
-             centered
-             maskClosable={false}
-             title="编辑菜单数据"
-             okText="确认"
-             okButtonProps={{icon: <CheckCircleOutlined/>}}
-             cancelButtonProps={{icon: <CloseCircleOutlined/>}}
-             cancelText="取消"
-             style={{top: '20px'}}
-             width={800}
-             onCancel={onCancel}
-             afterOpenChange={handleAfterOpen}
-             bodyStyle={{padding: '10px 40px'}}
-      >
-        <Form
-          form={menuData}
-          layout="horizontal"
-          name="basic"
-          size="middle"
-          labelCol={{span: 5}}
-          initialValues={{
-            menu_type: 1
-          }}
-        >
-          <Form.Item name="menu_type" label="菜单类型">
-            <Radio.Group>
-              <Radio value={1}>一级菜单</Radio>
-              <Radio value={2}>二级菜单</Radio>
-              <Radio value={3}>按钮</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item name="name" label="菜单名称" rules={[{required: true, message: '请输入菜单名称！'}]}>
-            <Input ref={inputRef} placeholder="菜单名称"/>
-          </Form.Item>
-          <Form.Item name="url" label="菜单路径" rules={[{required: true, message: '请输入菜单路径！'}]}>
-            <Input placeholder="菜单路径"/>
-          </Form.Item>
-          <Form.Item name="component" label="前端组件" rules={[{required: true, message: '请输入前端组件！'}]}>
-            <Input placeholder="请输入前端组件"/>
-          </Form.Item>
-          <Form.Item name="icon" label="菜单图标">
-            <Input addonAfter={<SettingOutlined/>}/>
-          </Form.Item>
-          <Form.Item name="sortNo" label="序号">
-            <InputNumber/>
-          </Form.Item>
-          <Form.Item name="route" valuePropName="checked" label="是否路由菜单">
-            <Switch checkedChildren="是" unCheckedChildren="否"/>
-          </Form.Item>
-          <Form.Item name="hidden" valuePropName="checked" label="隐藏路由">
-            <Switch checkedChildren="是" unCheckedChildren="否"/>
-          </Form.Item>
-          <Form.Item name="internalOrExternal" valuePropName="checked" label="打开方式">
-            <Switch checkedChildren="内部" unCheckedChildren="外部"/>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <MenuInfoModal open={open} onCancel={onCancel} menuData={menuData} handleOk={handleOk}/>
     </>
 
   )
