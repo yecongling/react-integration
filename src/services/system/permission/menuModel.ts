@@ -53,15 +53,15 @@ export type permissionResult = {
 /**
  * 目录
  */
-export interface directory{
+export interface Directory{
   title: string;
   value: string;
-  children?: directory[];
+  children?: Directory[];
 }
 
 export type directoryResult = {
   code: number;
-  data: directory[]
+  directory: Directory[]
 }
 
 /**

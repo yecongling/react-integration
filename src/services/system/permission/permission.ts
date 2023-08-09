@@ -28,18 +28,14 @@ export const getMenuList = () => {
  * @param params
  */
 export const getAllPermission = (params: any) => {
-  return new Promise((resolve) => {
-    defHttp.post<permissionResult>({url: Api.getAllPermission, data: params}).then((res) => {
-      resolve(res);
-    })
-  })
+  return defHttp.post<permissionResult>({url: Api.getAllPermission, data: params});
 }
 
 /**
  * 获取上级菜单
  */
 export const getDirectoryPermission = () => {
-    return defHttp.get<directoryResult>({url: Api.getDirectoryPermission});
+  return defHttp.get<directoryResult>({url: Api.getDirectoryPermission});
 }
 
 /**

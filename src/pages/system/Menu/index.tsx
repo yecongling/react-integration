@@ -1,11 +1,13 @@
-import React, {useState} from "react";
-import {Button, Card, Col, Form, Input, Row, Select, Space, Table} from "antd";
+import React, {useEffect, useRef, useState} from "react";
+import {Button, Card, Col, Form, Input, InputRef, Row, Select, Space, Table} from "antd";
 import {ColumnsType} from "antd/es/table";
 import * as Icons from "@ant-design/icons";
 import {PlusOutlined} from "@ant-design/icons";
 import './menu.less';
 import MenuInfoModal from "@/pages/system/Menu/components/MenuInfoModal";
-import {permission} from "@/services/system/permission/menuModel.ts";
+import {permission} from "@/services/system/permission/menuModel";
+import {getAllPermission} from "@/services/system/permission/permission";
+import {handlePermission} from "@/utils/util.ts";
 
 /**
  * 菜单维护界面
@@ -15,13 +17,17 @@ const Menu: React.FC = () => {
 
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
+  const menuName = useRef<InputRef>(null);
+  // 表格数据
+  const [tableData, setTableData] = useState<permission[]>([]);
   const [menuData] = Form.useForm();
 
-  const menuType = [
-    {label: '一级菜单', value: 1},
-    {label: '子菜单', value: 2},
-    {label: '按钮/权限', value: 3},
-  ];
+  useEffect(() => {
+    // @ts-ignore
+    menuName.current && menuName.current.focus();
+    getAllMenus();
+  }, []);
+
   const onFinish = (value: any) => {
     alert(value);
   }
@@ -68,24 +74,25 @@ const Menu: React.FC = () => {
     console.log(values)
   }
 
-  interface menuType {
-    key: React.ReactNode;
-    name: string;
-    menu_type: number;
-    icon: string;
-    component: string;
-    url: string;
-    sort_no: number;
-    children?: menuType[];
-  }
-
   // 动态渲染 Icon 图标
   const customIcons: { [key: string]: any } = Icons;
   const addIcon = (name: string) => {
     return React.createElement(customIcons[name]);
   };
+
+  const getAllMenus = async () => {
+    const formData = form.getFieldsValue();
+    const result = await getAllPermission(formData);
+    if (result) {
+      const tableData: permission[] = [...result.data];
+      // 处理数据，当children没有时不要这个节点
+      handlePermission(tableData);
+      setTableData(tableData);
+    }
+  }
+
   // 定义列
-  const columns: ColumnsType<menuType> = [
+  const columns: ColumnsType<permission> = [
     {
       title: '菜单名称',
       dataIndex: 'name',
@@ -94,12 +101,12 @@ const Menu: React.FC = () => {
     },
     {
       title: '菜单类型',
-      dataIndex: 'menu_type',
-      key: 'menu_type',
+      dataIndex: 'menuType',
+      key: 'menuType',
       width: '5%',
       align: 'center',
       render: (text) => {
-        return text === 1 ? "目录" : "一级菜单"
+        return text === '0' ? "目录" : "一级菜单"
       }
     },
     {
@@ -126,14 +133,14 @@ const Menu: React.FC = () => {
     },
     {
       title: '排序',
-      dataIndex: 'sort_no',
-      key: 'sort_no',
+      dataIndex: 'sortNo',
+      key: 'sortNo',
       width: '5%',
       align: 'center'
     },
     {
       title: '操作',
-      dataIndex: 'sort_no',
+      dataIndex: 'operation',
       key: 'operation',
       width: '10%',
       align: 'center',
@@ -146,108 +153,25 @@ const Menu: React.FC = () => {
     },
   ];
 
-  // 模拟数据
-  const data: menuType[] = [
-    {
-      key: 1,
-      name: '首页',
-      menu_type: 1,
-      icon: 'HomeOutlined',
-      component: '/Home',
-      url: '/home',
-      sort_no: 2,
-    },
-    {
-      key: 2,
-      name: '系统管理',
-      menu_type: 1,
-      icon: 'SettingOutlined',
-      component: '/system',
-      url: '/system',
-      sort_no: 2,
-      children: [
-        {
-          key: 3,
-          name: '菜单管理',
-          menu_type: 2,
-          icon: 'MenuOutlined',
-          component: '/system/Menu',
-          url: '/system/menu',
-          sort_no: 3
-        },
-        {
-          key: 4,
-          name: '角色管理',
-          menu_type: 2,
-          icon: 'UsergroupDeleteOutlined',
-          component: '/system/Role',
-          url: '/system/role',
-          sort_no: 3
-        },
-        {
-          key: 5,
-          name: '用户管理',
-          menu_type: 2,
-          icon: 'UserOutlined',
-          component: '/system/User',
-          url: '/system/user',
-          sort_no: 3
-        }
-      ]
-    }, {
-      key: 6,
-      name: '系统管理',
-      menu_type: 1,
-      icon: 'SettingOutlined',
-      component: '/system',
-      url: '/system',
-      sort_no: 2,
-      children: [
-        {
-          key: 7,
-          name: '菜单管理',
-          menu_type: 2,
-          icon: 'MenuOutlined',
-          component: '/system/Menu',
-          url: '/system/menu',
-          sort_no: 3
-        },
-        {
-          key: 8,
-          name: '角色管理',
-          menu_type: 2,
-          icon: 'UsergroupDeleteOutlined',
-          component: '/system/Role',
-          url: '/system/role',
-          sort_no: 3
-        },
-        {
-          key: 9,
-          name: '用户管理',
-          menu_type: 2,
-          icon: 'UserOutlined',
-          component: '/system/User',
-          url: '/system/user',
-          sort_no: 3
-        }
-      ]
-    }
-  ];
-
   return (
     <>
       {/* 查询区域 */}
       <Card>
-        <Form form={form} onFinish={onFinish}>
+        <Form form={form} onFinish={onFinish} initialValues={{menu_type: '-1'}}>
           <Row gutter={24}>
             <Col span={4}>
               <Form.Item label="菜单名称" name="name" initialValue="" style={{marginBottom: 0}}>
-                <Input autoFocus autoComplete="false"/>
+                <Input autoFocus ref={menuName} autoComplete="false"/>
               </Form.Item>
             </Col>
             <Col span={4}>
-              <Form.Item label="菜单类型" name="menu_type" initialValue="" style={{marginBottom: 0}}>
-                <Input autoComplete="false"/>
+              <Form.Item label="菜单类型" name="menu_type" style={{marginBottom: 0}}>
+                <Select options={[
+                  {value: '-1', label: '所有'},
+                  {value: '0', label: '一级菜单'},
+                  {value: '1', label: '字菜单'},
+                  {value: '2', label: '按钮'}
+                ]}/>
               </Form.Item>
             </Col>
             <Col span={4}>
@@ -274,7 +198,7 @@ const Menu: React.FC = () => {
           bordered
           size="middle"
           columns={columns}
-          dataSource={data}
+          dataSource={tableData}
         />
       </Card>
       {/* 编辑弹窗 */}

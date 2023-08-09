@@ -3,7 +3,7 @@ import {MenuInfoProps} from "@/pages/system/Menu/components/MenuInfoProps.ts";
 import {CheckCircleOutlined, CloseCircleOutlined, SettingOutlined} from "@ant-design/icons";
 import {Form, Input, InputNumber, InputRef, Modal, Radio, RadioChangeEvent, Switch, TreeSelect} from "antd";
 import {getDirectoryPermission} from "@/services/system/permission/permission";
-import {directory} from "@/services/system/permission/menuModel.ts";
+import {Directory} from "@/services/system/permission/menuModel.ts";
 
 const MenuInfoModal: React.FC<MenuInfoProps> = (props) => {
   const {open, onCancel, menuData, handleOk} = props;
@@ -12,7 +12,7 @@ const MenuInfoModal: React.FC<MenuInfoProps> = (props) => {
   // 上级菜单
   const [value, setValue] = useState<string>();
   // 目录数据
-  const [treeData, setTreeData] = useState<directory[]>([]);
+  const [treeData, setTreeData] = useState<Directory[]>([]);
 
   useEffect(() => {
     if (open) {
@@ -48,7 +48,7 @@ const MenuInfoModal: React.FC<MenuInfoProps> = (props) => {
   const getDirectory = async () => {
     const result = await getDirectoryPermission();
     if (result) {
-      const treeData: directory[] = [...result.data];
+      const treeData: Directory[] = [...result.directory];
       setTreeData(treeData);
     }
   }
@@ -100,17 +100,17 @@ const MenuInfoModal: React.FC<MenuInfoProps> = (props) => {
             <Input ref={inputRef} allowClear placeholder="菜单名称"/>
           </Form.Item>
           {showParent &&
-            <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
-              <TreeSelect
-                style={{width: '100%'}}
-                value={value}
-                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                treeData={treeData}
-                placeholder="请选择"
-                treeDefaultExpandAll
-                onChange={onChange}
-              />
-            </Form.Item>}
+              <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
+                  <TreeSelect
+                      style={{width: '100%'}}
+                      value={value}
+                      dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                      treeData={treeData}
+                      placeholder="请选择"
+                      treeDefaultExpandAll
+                      onChange={onChange}
+                  />
+              </Form.Item>}
           <Form.Item name="url" label="菜单路径" rules={[{required: true, message: '请输入菜单路径！'}]}>
             <Input allowClear placeholder="菜单路径"/>
           </Form.Item>
