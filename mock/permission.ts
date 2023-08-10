@@ -619,9 +619,19 @@ const permission: Array<MockMethod> = [
         code: 200,
         message: 'success',
         success: true,
-        result: [
-
-        ]
+        result: []
+      }
+    }
+  },
+  {
+    url: "/api/sys/permission/getAllPermission",
+    method: "post",
+    response: () => {
+      return {
+        code: 200,
+        message: 'success',
+        success: true,
+        result: []
       }
     }
   }

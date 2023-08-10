@@ -1,60 +1,168 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Button, Card, Col, Form, Input, InputRef, Row, Select, Space, Table} from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  InputRef,
+  message,
+  Modal,
+  Popconfirm,
+  Radio,
+  RadioChangeEvent,
+  Row,
+  Select,
+  Space,
+  Switch,
+  Table,
+  TreeSelect
+} from "antd";
 import {ColumnsType} from "antd/es/table";
 import * as Icons from "@ant-design/icons";
-import {PlusOutlined} from "@ant-design/icons";
+import {CheckCircleOutlined, CloseCircleOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
 import './menu.less';
-import MenuInfoModal from "@/pages/system/Menu/components/MenuInfoModal";
-import {permission} from "@/services/system/permission/menuModel";
-import {getAllPermission} from "@/services/system/permission/permission";
-import {handlePermission} from "@/utils/util.ts";
+import {
+  addPermission,
+  deletePermission,
+  getAllPermission,
+  getDirectoryPermission,
+  validateFields
+} from "@/services/system/permission/permission";
+import {handlePermission} from "@/utils/util";
+import {Directory, permission} from "@/services/system/permission/menuModel";
 
 /**
  * 菜单维护界面
  * @constructor
  */
 const Menu: React.FC = () => {
-
   const [form] = Form.useForm();
-  const [open, setOpen] = useState(false);
+  const [menuData] = Form.useForm();
+  const inputRef = useRef<InputRef>(null);
   const menuName = useRef<InputRef>(null);
+  const [open, setOpen] = useState(false);
+  const [showParent, setShow] = useState(true);
+  // 上级菜单
+  const [value, setValue] = useState<string>();
   // 表格数据
   const [tableData, setTableData] = useState<permission[]>([]);
-  const [menuData] = Form.useForm();
-
+  // 目录数据
+  const [treeData, setTreeData] = useState<Directory[]>([]);
+  const onChange = (newValue: string) => {
+    setValue(newValue);
+  };
   useEffect(() => {
-    // @ts-ignore
     menuName.current && menuName.current.focus();
     getAllMenus();
   }, []);
 
-  const onFinish = (value: any) => {
-    alert(value);
+  useEffect(() => {
+    if (open) {
+      getDirectory();
+    }
+  }, [open]);
+
+  /**
+   * 检索菜单
+   */
+  const onFinish = () => {
+    getAllMenus();
   }
 
+  /**
+   * 窗口打开关闭操作
+   *
+   * @param open
+   */
+  const handleAfterOpen = (open: boolean) => {
+    if (open) {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+      return;
+    }
+    if (menuName.current) {
+      menuName.current.focus();
+    }
+  }
+
+  /**
+   * 字段校验
+   *
+   * @param values
+   */
+  const validate = async (values: permission) => {
+    try {
+      const res = validateFields();
+      if (res.success) {
+        // 提交表单
+        const result = await addPermission(values);
+        if (result.code == 200) {
+          message.success("保存成功");
+          // 刷新
+          getAllMenus();
+          setOpen(false);
+        }
+      } else {
+        form.setFields([
+          {
+            name: res.fieldName,
+            errors: [res.message],
+          },
+        ]);
+      }
+    } catch (err) {
+      return;
+    }
+  };
+
+
+  /**
+   * 菜单类型变换
+   * @param e
+   */
+  const changeMenuType = (e: RadioChangeEvent) => {
+    if (e.target.value === 0) {
+      setShow(false);
+      return;
+    }
+    setShow(true);
+  }
 
   /**
    * 编辑
    * @param value
    */
   const edit = (value: any) => {
-    console.log(value);
+    menuData.setFieldsValue(value);
+    if (value['menuType'] !== 0) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
     setOpen(true);
   }
 
   /**
-   * 删除
-   * @param value
+   * 确定删除的回调
    */
-  const del = (value: any) => {
-    console.log(value)
-    alert('删除')
+  const confirm = async (value: any) => {
+    const result = await deletePermission(value.id);
+    if (result === 1) {
+      message.success("删除成功");
+      getAllMenus();
+    }
   }
 
   /**
    * 新增
    */
   const add = () => {
+    menuData.resetFields();
+    // 默认上级菜单显示（选中字菜单）
+    setShow(true);
     setOpen(true);
   }
 
@@ -66,12 +174,14 @@ const Menu: React.FC = () => {
   }
 
   /**
-   * 字段校验
-   *
-   * @param values
+   * 获取目录
    */
-  const handleOk = async (values: permission) => {
-    console.log(values)
+  const getDirectory = async () => {
+    const result = await getDirectoryPermission();
+    if (result) {
+      const treeData: Directory[] = [...result.directory];
+      setTreeData(treeData);
+    }
   }
 
   // 动态渲染 Icon 图标
@@ -79,18 +189,6 @@ const Menu: React.FC = () => {
   const addIcon = (name: string) => {
     return React.createElement(customIcons[name]);
   };
-
-  const getAllMenus = async () => {
-    const formData = form.getFieldsValue();
-    const result = await getAllPermission(formData);
-    if (result) {
-      const tableData: permission[] = [...result.data];
-      // 处理数据，当children没有时不要这个节点
-      handlePermission(tableData);
-      setTableData(tableData);
-    }
-  }
-
   // 定义列
   const columns: ColumnsType<permission> = [
     {
@@ -106,7 +204,7 @@ const Menu: React.FC = () => {
       width: '5%',
       align: 'center',
       render: (text) => {
-        return text === '0' ? "目录" : "一级菜单"
+        return text === 0 ? "一级菜单" : (text === 1 ? "子菜单" : "按钮");
       }
     },
     {
@@ -140,37 +238,56 @@ const Menu: React.FC = () => {
     },
     {
       title: '操作',
-      dataIndex: 'operation',
+      dataIndex: 'sort_no',
       key: 'operation',
       width: '10%',
       align: 'center',
       render: (_text, record) => (
         <Space size="small">
           <Button type="primary" size="small" onClick={() => edit(record)}>编辑</Button>
-          <Button type="primary" size="small" danger onClick={() => del(record)}>删除</Button>
+          <Popconfirm
+            title="删除菜单"
+            description="确定删除这条菜单数据吗?"
+            onConfirm={() => confirm(record)}
+            okText="确认"
+            cancelText="取消"
+          >
+            <Button type="primary" size="small" danger>删除</Button>
+          </Popconfirm>
         </Space>
       )
     },
   ];
 
+  const getAllMenus = async () => {
+    const formData = form.getFieldsValue();
+    const result = await getAllPermission(formData);
+    if (result) {
+      const tableData: permission[] = [...result.data];
+      // 处理数据，当children没有时不要这个节点
+      handlePermission(tableData);
+      setTableData(tableData);
+    }
+  }
+
   return (
     <>
       {/* 查询区域 */}
       <Card>
-        <Form form={form} onFinish={onFinish} initialValues={{menu_type: '-1'}}>
+        <Form form={form} onFinish={onFinish}>
           <Row gutter={24}>
             <Col span={4}>
               <Form.Item label="菜单名称" name="name" initialValue="" style={{marginBottom: 0}}>
-                <Input autoFocus ref={menuName} autoComplete="false"/>
+                <Input ref={menuName} allowClear autoComplete="false"/>
               </Form.Item>
             </Col>
             <Col span={4}>
-              <Form.Item label="菜单类型" name="menu_type" style={{marginBottom: 0}}>
+              <Form.Item label="菜单类型" name="menu_type" initialValue="-1" style={{marginBottom: 0}}>
                 <Select options={[
-                  {value: '-1', label: '所有'},
+                  {value: '-1', label: '全部'},
                   {value: '0', label: '一级菜单'},
                   {value: '1', label: '字菜单'},
-                  {value: '2', label: '按钮'}
+                  {value: '2', label: '按钮'},
                 ]}/>
               </Form.Item>
             </Col>
@@ -195,6 +312,7 @@ const Menu: React.FC = () => {
         <Table
           style={{marginTop: '6px'}}
           className="table"
+          scroll={{x: 'max-content', y: 'calc(100vh - 400px)'}}
           bordered
           size="middle"
           columns={columns}
@@ -202,9 +320,85 @@ const Menu: React.FC = () => {
         />
       </Card>
       {/* 编辑弹窗 */}
-      <MenuInfoModal open={open} onCancel={onCancel} menuData={menuData} handleOk={handleOk}/>
+      <Modal open={open}
+             centered
+             maskClosable={false}
+             title="编辑菜单数据"
+             okText="确认"
+             okButtonProps={{icon: <CheckCircleOutlined/>}}
+             cancelButtonProps={{icon: <CloseCircleOutlined/>}}
+             cancelText="取消"
+             style={{top: '20px'}}
+             width={800}
+             onOk={() => {
+               menuData.validateFields().then((values) => {
+                 menuData.resetFields();
+                 validate(values);
+               });
+             }}
+             onCancel={onCancel}
+             afterOpenChange={handleAfterOpen}
+             bodyStyle={{padding: '10px 40px'}}
+      >
+        <Form
+          form={menuData}
+          layout="horizontal"
+          name="basic"
+          size="middle"
+          labelCol={{span: 5}}
+          initialValues={{
+            menuType: 1,
+            route: true,
+            internalOrExternal: true,
+            sortNo: 1
+          }}
+        >
+          <Form.Item name="menuType" label="菜单类型">
+            <Radio.Group onChange={changeMenuType}>
+              <Radio value={0}>一级菜单</Radio>
+              <Radio value={1}>子菜单</Radio>
+              <Radio value={2}>按钮</Radio>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item name="name" label="菜单名称" rules={[{required: true, message: '请输入菜单名称！'}]}>
+            <Input ref={inputRef} allowClear placeholder="菜单名称"/>
+          </Form.Item>
+          {showParent &&
+            <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
+              <TreeSelect
+                style={{width: '100%'}}
+                value={value}
+                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                treeData={treeData}
+                placeholder="请选择"
+                treeDefaultExpandAll
+                onChange={onChange}
+              />
+            </Form.Item>}
+          <Form.Item name="url" label="菜单路径" rules={[{required: true, message: '请输入菜单路径！'}]}>
+            <Input allowClear placeholder="菜单路径"/>
+          </Form.Item>
+          <Form.Item name="component" label="前端组件">
+            <Input allowClear placeholder="请输入前端组件"/>
+          </Form.Item>
+          <Form.Item name="icon" label="菜单图标">
+            <Input allowClear addonAfter={<SettingOutlined/>}/>
+          </Form.Item>
+          <Form.Item name="sortNo" label="序号">
+            <InputNumber/>
+          </Form.Item>
+          <Form.Item name="route" valuePropName="checked" label="是否路由菜单">
+            <Switch checkedChildren="是" unCheckedChildren="否"/>
+          </Form.Item>
+          <Form.Item name="hidden" valuePropName="checked" label="隐藏路由">
+            <Switch checkedChildren="是" unCheckedChildren="否"/>
+          </Form.Item>
+          <Form.Item name="internalOrExternal" valuePropName="checked" label="打开方式">
+            <Switch checkedChildren="内部" unCheckedChildren="外部"/>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
-
   )
 }
 

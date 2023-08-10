@@ -51,11 +51,7 @@ export function validateFields() {
  * @param param
  */
 export const addPermission = (param: permission) => {
-  return new Promise((resolve) => {
-    defHttp.post<permissionResult>({url: Api.addPermission, data: param}).then((res) => {
-      resolve(res);
-    })
-  });
+    return defHttp.post<permissionResult>({url: Api.addPermission, data: param});
 }
 
 /**
