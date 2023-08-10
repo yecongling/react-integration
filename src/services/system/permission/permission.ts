@@ -35,7 +35,7 @@ export const getAllPermission = (params: any) => {
  * 获取上级菜单
  */
 export const getDirectoryPermission = () => {
-  return defHttp.get<directoryResult>({url: Api.getDirectoryPermission});
+  return defHttp.get<directoryResult>({url: Api.getDirectoryPermission}, {successMessageMode: "none"});
 }
 
 /**
@@ -51,19 +51,15 @@ export function validateFields() {
  * @param param
  */
 export const addPermission = (param: permission) => {
-    return defHttp.post<permissionResult>({url: Api.addPermission, data: param});
+  return defHttp.post<permissionResult>({url: Api.addPermission, data: param}, {isTransformResponse: false});
 }
 
 /**
  * 编辑菜单
  * @param param
  */
-export const editPermission = (param: permission) => {
-  return new Promise((resolve) => {
-    defHttp.post<permissionResult>({url: Api.editPermission, data: param}).then((res) => {
-      resolve(res);
-    })
-  });
+export const updatePermission = (param: permission) => {
+  return defHttp.post<permissionResult>({url: Api.updatePermission, data: param}, {isTransformResponse: false});
 }
 
 /**

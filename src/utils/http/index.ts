@@ -172,7 +172,7 @@ function createAxios(opts?: Partial<CreateAxiosOptions>) {
           // 异常消息提示类型
           errorMessageMode: 'message',
           // 成功消息提示类型
-          successMessageMode: 'none',
+          successMessageMode: 'success',
           // 接口地址（默认）
           apiUrl: "/integration",
           // 接口拼接地址前缀

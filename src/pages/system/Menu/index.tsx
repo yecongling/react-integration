@@ -28,10 +28,11 @@ import {
   deletePermission,
   getAllPermission,
   getDirectoryPermission,
+  updatePermission,
   validateFields
 } from "@/services/system/permission/permission";
 import {handlePermission} from "@/utils/util";
-import {Directory, permission} from "@/services/system/permission/menuModel";
+import {Directory, permission, permissionResult} from "@/services/system/permission/menuModel";
 
 /**
  * 菜单维护界面
@@ -98,7 +99,12 @@ const Menu: React.FC = () => {
       const res = validateFields();
       if (res.success) {
         // 提交表单
-        const result = await addPermission(values);
+        let result: permissionResult;
+        if (values["id"]) {
+          result = await updatePermission(values);
+        } else {
+          result = await addPermission(values);
+        }
         if (result.code == 200) {
           message.success("保存成功");
           // 刷新
@@ -276,12 +282,12 @@ const Menu: React.FC = () => {
       <Card>
         <Form form={form} onFinish={onFinish}>
           <Row gutter={24}>
-            <Col span={4}>
+            <Col span={5}>
               <Form.Item label="菜单名称" name="name" initialValue="" style={{marginBottom: 0}}>
                 <Input ref={menuName} allowClear autoComplete="false"/>
               </Form.Item>
             </Col>
-            <Col span={4}>
+            <Col span={5}>
               <Form.Item label="菜单类型" name="menu_type" initialValue="-1" style={{marginBottom: 0}}>
                 <Select options={[
                   {value: '-1', label: '全部'},
@@ -291,7 +297,7 @@ const Menu: React.FC = () => {
                 ]}/>
               </Form.Item>
             </Col>
-            <Col span={4}>
+            <Col span={5}>
               <Form.Item label="显示" name="show" initialValue="-1" style={{marginBottom: 0}}>
                 <Select options={[
                   {value: '-1', label: '所有'},
@@ -300,7 +306,7 @@ const Menu: React.FC = () => {
                 ]}/>
               </Form.Item>
             </Col>
-            <Col span={4}>
+            <Col span={9}>
               <Button type="primary" htmlType="submit">查询</Button>
               <Button htmlType="reset" style={{margin: '0 8px'}}>重置</Button>
             </Col>
@@ -353,6 +359,9 @@ const Menu: React.FC = () => {
             sortNo: 1
           }}
         >
+          <Form.Item name="id" label="菜单ID" hidden>
+            <Input placeholder="菜单ID"/>
+          </Form.Item>
           <Form.Item name="menuType" label="菜单类型">
             <Radio.Group onChange={changeMenuType}>
               <Radio value={0}>一级菜单</Radio>
@@ -364,17 +373,17 @@ const Menu: React.FC = () => {
             <Input ref={inputRef} allowClear placeholder="菜单名称"/>
           </Form.Item>
           {showParent &&
-            <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
-              <TreeSelect
-                style={{width: '100%'}}
-                value={value}
-                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                treeData={treeData}
-                placeholder="请选择"
-                treeDefaultExpandAll
-                onChange={onChange}
-              />
-            </Form.Item>}
+              <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
+                  <TreeSelect
+                      style={{width: '100%'}}
+                      value={value}
+                      dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                      treeData={treeData}
+                      placeholder="请选择"
+                      treeDefaultExpandAll
+                      onChange={onChange}
+                  />
+              </Form.Item>}
           <Form.Item name="url" label="菜单路径" rules={[{required: true, message: '请输入菜单路径！'}]}>
             <Input allowClear placeholder="菜单路径"/>
           </Form.Item>

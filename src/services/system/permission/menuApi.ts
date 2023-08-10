@@ -8,7 +8,7 @@ export enum Api {
   // 添加菜单
   addPermission = '/api/sys/permission/addPermission',
   // 编辑菜单
-  editPermission = '/api/sys/permission/editPermission',
+  updatePermission = '/api/sys/permission/updatePermission',
   // 删除菜单
   deletePermission = '/api/sys/permission/deletePermission'
 }
