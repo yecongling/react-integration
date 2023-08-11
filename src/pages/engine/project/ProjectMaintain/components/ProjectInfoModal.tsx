@@ -43,7 +43,7 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
       if (result.code === 200) {
         setOpen(false);
         // 如果是新增，则新增完成就跳转到设计界面
-        navigate('/project/projectMaintain/designer', {state: values});
+        navigate('/engine/project/projectMaintain/designer', {state: values});
       } else {
         messageApi.error(result.message);
       }

@@ -111,7 +111,7 @@ const ProjectMaintain: React.FC = () => {
         return (
           <>
             <a type="link" onClick={() => {
-              navigate('/project/projectMaintain/designer', {state: record});
+              navigate('/engine/project/projectMaintain/designer', {state: record});
             }}>{text}</a>
           </>
         )
@@ -216,7 +216,8 @@ const ProjectMaintain: React.FC = () => {
       <ProjectTypeModal projectType={projectType} setProjectType={setProjectType}
                         changeModal={changeModal} projectName={projectName}/>
       {/* 编辑弹窗 */}
-      <ProjectInfoModal open={open} setOpen={setOpen} isEdit={isEdit} changeModal={changeModal} projectName={projectName}
+      <ProjectInfoModal open={open} setOpen={setOpen} isEdit={isEdit} changeModal={changeModal}
+                        projectName={projectName}
                         editInfo={editInfo} projectData={projectData}/>
     </>
   );
