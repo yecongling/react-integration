@@ -41,7 +41,7 @@ const Toolbar: React.FC = () => {
     <>
       <Row className="editor-toolbar" style={{borderBottom: '1px solid #ccc'}}>
         <Col span={24} style={{padding: '3px'}}>
-          <Tabs type="card" items={tabs} tabBarGutter={-1} className="tab-operator"/>
+          <Tabs type="card" tabBarStyle={{marginBottom: 0}} items={tabs} tabBarGutter={-1} className="tab-operator"/>
         </Col>
       </Row>
     </>

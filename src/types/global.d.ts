@@ -59,3 +59,11 @@ declare module 'react-router' {
     hidePathForChildren?: boolean;
   }
 }
+
+export interface Result<T> {
+  code: number;
+  message: string;
+  data: T;
+  success: boolean
+  success: boolean
+}

@@ -1,14 +1,15 @@
 import React, {useRef} from "react";
-import {Button, Form, Input, InputRef, Modal, Select} from "antd";
+import {Button, Form, Input, InputRef, message, Modal, Select} from "antd";
 import {ArrowLeftOutlined, CheckCircleOutlined, CloseCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 import {ProjectInfoProps} from "@/pages/project/ProjectMaintain/components/ProjectState.ts";
+import {addProject, updateProject} from "@/services/system/project/projectMaintain/projectMaintain.ts";
 
 const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
   const inputRef = useRef<InputRef>(null);
   const navigate = useNavigate();
   const {open, setOpen, isEdit, changeModal, projectName, editInfo, projectData} = props;
-
+  const [messageApi, contextHolder] = message.useMessage();
   /**
    * 窗口打开关闭
    * @param open
@@ -35,16 +36,29 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
   /**
    * 保存数据
    */
-  const handleOk = () => {
+  const handleOk = async (values: any) => {
     // 先完成数据存储操作
     if (!isEdit) {
-      // 如果是新增，则新增完成就跳转到设计界面
-      navigate('/project/projectMaintain/designer');
+      const result = await addProject(values);
+      if (result.code === 200) {
+        setOpen(false);
+        // 如果是新增，则新增完成就跳转到设计界面
+        navigate('/project/projectMaintain/designer', {state: values});
+      } else {
+        messageApi.error(result.message);
+      }
+    } else {
+      const result = await updateProject(values);
+      if (result.code === 200) {
+        messageApi.success(result.message);
+        setOpen(false);
+      }
     }
   }
 
   return (
     <>
+      {contextHolder}
       <Modal open={open}
              centered
              maskClosable={false}
@@ -58,9 +72,9 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
              style={{top: '20px'}}
              width={800}
              onOk={() => {
-               projectData.validateFields().then(() => {
+               projectData.validateFields().then((values) => {
                  projectData.resetFields();
-                 handleOk();
+                 handleOk(values);
                });
              }}
              onCancel={onCancel}
@@ -74,10 +88,13 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
           size="middle"
           labelCol={{span: 4}}
           initialValues={{
-            level: '0',
+            projectPriority: '0',
             log: '1'
           }}
         >
+          <Form.Item name="id" label="项目id" hidden>
+            <Input/>
+          </Form.Item>
           <Form.Item name="projectName" label="项目名称" rules={[{required: true, message: '请输入项目名称'}]}>
             <Input ref={inputRef} placeholder="项目名称"/>
           </Form.Item>
@@ -92,7 +109,7 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
                 {value: '3', label: '仅在发生错误是记录'}
               ]}/>
             </Form.Item> : ''}
-          <Form.Item name="level" label="优先级" rules={[{required: true, message: '请输入项目名称'}]}>
+          <Form.Item name="projectPriority" label="优先级" rules={[{required: true, message: '请选择项目优先级'}]}>
             <Select placeholder="项目名称" options={[
               {value: '0', label: '0'},
               {value: '1', label: '1'},

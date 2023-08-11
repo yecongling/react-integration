@@ -10,6 +10,7 @@ import {
   message,
   Modal,
   Popconfirm,
+  Popover,
   Radio,
   RadioChangeEvent,
   Row,
@@ -33,6 +34,7 @@ import {
 } from "@/services/system/permission/permission";
 import {handlePermission} from "@/utils/util";
 import {Directory, permission, permissionResult} from "@/services/system/permission/menuModel";
+import IconPicker from "@/components/menu/icon/IconPicker.tsx";
 
 /**
  * 菜单维护界面
@@ -373,17 +375,17 @@ const Menu: React.FC = () => {
             <Input ref={inputRef} allowClear placeholder="菜单名称"/>
           </Form.Item>
           {showParent &&
-              <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
-                  <TreeSelect
-                      style={{width: '100%'}}
-                      value={value}
-                      dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                      treeData={treeData}
-                      placeholder="请选择"
-                      treeDefaultExpandAll
-                      onChange={onChange}
-                  />
-              </Form.Item>}
+            <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
+              <TreeSelect
+                style={{width: '100%'}}
+                value={value}
+                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                treeData={treeData}
+                placeholder="请选择"
+                treeDefaultExpandAll
+                onChange={onChange}
+              />
+            </Form.Item>}
           <Form.Item name="url" label="菜单路径" rules={[{required: true, message: '请输入菜单路径！'}]}>
             <Input allowClear placeholder="菜单路径"/>
           </Form.Item>
@@ -391,7 +393,8 @@ const Menu: React.FC = () => {
             <Input allowClear placeholder="请输入前端组件"/>
           </Form.Item>
           <Form.Item name="icon" label="菜单图标">
-            <Input allowClear addonAfter={<SettingOutlined/>}/>
+            <Input allowClear
+                   addonAfter={<Popover placement="bottomRight" trigger="click" arrow={false} content={<IconPicker/>}><SettingOutlined/></Popover>}/>
           </Form.Item>
           <Form.Item name="sortNo" label="序号">
             <InputNumber/>
