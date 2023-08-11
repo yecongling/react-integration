@@ -162,7 +162,7 @@ const ProjectMaintain: React.FC = () => {
             alert('复制')
           }}>复制</a>
           <a type="link" onClick={() => {
-            navigate('/project/projectMaintain/designer', {state: record});
+            navigate('/engine/project/projectMaintain/designer', {state: record});
           }}>设计</a>
           <a type="link" onClick={() => {
             alert('转换')
