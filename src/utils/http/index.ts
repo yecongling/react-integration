@@ -12,6 +12,7 @@ import {message as messageApi, Modal} from "antd";
 // import {setToken} from "@/stores/modules/global/action";
 import {isString} from "@/utils/is";
 import {joinTimestamp} from "@/utils/http/helper";
+import {Recordable} from "@/types/global";
 
 /**
  * 数据处理，拦截器。hooks实现

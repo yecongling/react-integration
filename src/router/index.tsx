@@ -36,14 +36,24 @@ const routes = [
         component: lazyLoad('system/Menu').type
       },
       {
-        path: "project/projectMaintain",
+        path: "engine/project/projectMaintain",
         auth: false,
-        component: lazyLoad('project/ProjectMaintain').type
+        component: lazyLoad('engine/project/ProjectMaintain').type
       },
       {
-        path: "project/projectMaintain/designer",
+        path: "/engine/project/projectMaintain/designer",
         auth: false,
-        component: lazyLoad('project/ProjectMaintain/Designer').type
+        component: lazyLoad('engine/project/ProjectMaintain/Designer').type
+      },
+      {
+        path: "/engine/connection/database",
+        auth: false,
+        component: lazyLoad('engine/connection/Database').type
+      },
+      {
+        path: "/engine/resource/database",
+        auth: false,
+        component: lazyLoad('engine/resource/Database').type
       },
       {
         path: "emr/designCenter",

@@ -2,12 +2,12 @@ import React, {useEffect, useRef, useState} from "react";
 import {Button, Card, Col, Form, Input, InputRef, Row, Select, Space, Switch, Table} from "antd";
 import {FullscreenOutlined, QuestionCircleOutlined, SearchOutlined, SyncOutlined} from "@ant-design/icons";
 import {ColumnsType} from "antd/es/table";
-import {Project} from "./Project";
+import {Project} from "./Project.ts";
 import "./index.less";
 import {useNavigate} from "react-router-dom";
-import {getAllProject} from "@/services/system/project/projectMaintain/projectMaintain";
-import ProjectTypeModal from "@/pages/project/ProjectMaintain/components/ProjectTypeModal";
-import ProjectInfoModal from "@/pages/project/ProjectMaintain/components/ProjectInfoModal";
+import {getAllProject} from "@/services/engine/project/projectMaintain/projectMaintain.ts";
+import ProjectTypeModal from "@/pages/engine/project/ProjectMaintain/components/ProjectTypeModal.tsx";
+import ProjectInfoModal from "@/pages/engine/project/ProjectMaintain/components/ProjectInfoModal.tsx";
 
 const ProjectMaintain: React.FC = () => {
   const [searchForm] = Form.useForm();

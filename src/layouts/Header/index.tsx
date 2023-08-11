@@ -20,7 +20,6 @@ import avatar from "@/assets/images/avatar.png";
 import BreadcrumbNav from "@/components/header/BreadcrumbNav";
 import FullScreen from "@/components/header/FullScreen";
 import {useNavigate} from "react-router-dom";
-import FloatBtn from "@/components/header/FloatBtn.tsx";
 /*import Setting from "@/component/header/Setting.tsx";*/
 
 const Header: React.FC = () => {
@@ -137,7 +136,7 @@ const Header: React.FC = () => {
           </Space>
         </div>
       </Layout.Header>
-      <FloatBtn/>
+      {/*<FloatBtn/>*/}
       {/*<Setting/>*/}
       {contextHolder}
     </>

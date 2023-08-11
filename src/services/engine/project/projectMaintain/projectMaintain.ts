@@ -1,6 +1,6 @@
-import {Project} from "@/pages/project/ProjectMaintain/Project.ts";
+import {Project} from "@/pages/engine/project/ProjectMaintain/Project.ts";
 import {defHttp} from "@/utils/http";
-import {ProjectApi} from "@/services/system/project/projectMaintain/projectApi.ts";
+import {ProjectApi} from "@/services/engine/project/projectMaintain/projectApi.ts";
 import {Result} from "@/types/global";
 
 
