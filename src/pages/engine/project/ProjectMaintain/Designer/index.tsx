@@ -19,7 +19,7 @@ const Designer: React.FC = () => {
             <Row className="designer-content">
               <Col span={24} className="title">
                 {location.state.projectName}<Button type="primary" onClick={() => {
-                navigate('/project/projectMaintain')
+                navigate('/engine/project/projectMaintain')
               }}>返回项目维护</Button>
               </Col>
               <Col span={24} className="designer-area">
