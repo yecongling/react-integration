@@ -1,6 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Button, Card, Col, Form, Input, InputRef, Row, Select, Space, Switch, Table} from "antd";
-import {FullscreenOutlined, QuestionCircleOutlined, SearchOutlined, SyncOutlined} from "@ant-design/icons";
+import {Button, Card, Col, Dropdown, Form, Input, InputRef, MenuProps, Row, Select, Space, Switch, Table} from "antd";
+import {
+  DownOutlined,
+  FullscreenOutlined,
+  QuestionCircleOutlined,
+  SearchOutlined,
+  SyncOutlined
+} from "@ant-design/icons";
 import {ColumnsType} from "antd/es/table";
 import {Project} from "./Project.ts";
 import "./index.less";
@@ -80,6 +86,22 @@ const ProjectMaintain: React.FC = () => {
     setOpen(true);
   }
 
+  const items: MenuProps['items'] = [
+    {
+      key: "copy",
+      label: "复制",
+      onClick: () => {
+        alert("复制");
+      }
+    },
+    {
+      key: "transfer",
+      label: "转换",
+      onClick: () => {
+        alert("转换")
+      }
+    }
+  ];
 
   const columns: ColumnsType<Project> = [
     {
@@ -157,16 +179,14 @@ const ProjectMaintain: React.FC = () => {
       align: 'center',
       render: function (_text, record) {
         return <Space size={8}>
-          <a onClick={() => editProject(record)}>编辑</a>
-          <a type="link" onClick={() => {
-            alert('复制')
-          }}>复制</a>
-          <a type="link" onClick={() => {
+          <Button type="primary" size="small" onClick={() => editProject(record)}>编辑</Button>
+          <Button type="primary" size="small" onClick={() => {
             navigate('/engine/project/projectMaintain/designer', {state: record});
-          }}>设计</a>
-          <a type="link" onClick={() => {
-            alert('转换')
-          }}>转换</a>
+          }}>设计</Button>
+          <Button type="primary" danger size="small" onClick={() => alert("删除")}>删除</Button>
+          <Dropdown menu={{items}}>
+            <Button type="default" size="small">更多<DownOutlined/></Button>
+          </Dropdown>
         </Space>;
       }
     },
