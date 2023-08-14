@@ -1,5 +1,20 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Button, Card, Col, Dropdown, Form, Input, InputRef, MenuProps, Row, Select, Space, Switch, Table} from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  Form,
+  Input,
+  InputRef,
+  MenuProps,
+  Popconfirm,
+  Row,
+  Select,
+  Space,
+  Switch,
+  Table
+} from "antd";
 import {
   DownOutlined,
   FullscreenOutlined,
@@ -183,7 +198,15 @@ const ProjectMaintain: React.FC = () => {
           <Button type="primary" size="small" onClick={() => {
             navigate('/engine/project/projectMaintain/designer', {state: record});
           }}>设计</Button>
-          <Button type="primary" danger size="small" onClick={() => alert("删除")}>删除</Button>
+          <Popconfirm
+            title="删除菜单"
+            description="确定删除这条菜单数据吗?"
+            onConfirm={() => alert("删除")}
+            okText="确认"
+            cancelText="取消"
+          >
+            <Button type="primary" danger size="small">删除</Button>
+          </Popconfirm>
           <Dropdown menu={{items}}>
             <Button type="default" size="small">更多<DownOutlined/></Button>
           </Dropdown>
