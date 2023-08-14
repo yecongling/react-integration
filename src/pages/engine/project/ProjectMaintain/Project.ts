@@ -8,6 +8,6 @@ export interface Project {
   projectPriority: number;
   log?: number;
   description?: string;
-  type: number;
+  projectType: number;
   chart: number;
 }

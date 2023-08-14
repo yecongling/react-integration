@@ -8,6 +8,7 @@ import {
   Input,
   InputRef,
   MenuProps,
+  message,
   Popconfirm,
   Row,
   Select,
@@ -26,7 +27,7 @@ import {ColumnsType} from "antd/es/table";
 import {Project} from "./Project.ts";
 import "./index.less";
 import {useNavigate} from "react-router-dom";
-import {getAllProject} from "@/services/engine/project/projectMaintain/projectMaintain.ts";
+import {deleteProject, getAllProject} from "@/services/engine/project/projectMaintain/projectMaintain.ts";
 import ProjectTypeModal from "@/pages/engine/project/ProjectMaintain/components/ProjectTypeModal.tsx";
 import ProjectInfoModal from "@/pages/engine/project/ProjectMaintain/components/ProjectInfoModal.tsx";
 
@@ -34,7 +35,7 @@ const ProjectMaintain: React.FC = () => {
   const [searchForm] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [projectType, setProjectType] = useState(false);
-  const [editInfo, setEditInfo] = useState({title: '集成', opr: '创建新的', projectType: '1'});
+  const [editInfo, setEditInfo] = useState({title: '集成', opr: '创建新的', projectType: 1});
   const [isEdit, setIsEdit] = useState(false);
   const [projectSource, setProjectSource] = useState<Project[]>([]);
   const [projectData] = Form.useForm();
@@ -69,17 +70,19 @@ const ProjectMaintain: React.FC = () => {
     switch (type) {
       // 接口项目
       case "1":
-        setEditInfo((prevState) => ({...prevState, title: '接口', opr: '创建新的', projectType: '1'}));
+        setEditInfo((prevState) => ({...prevState, title: '接口', opr: '创建新的', projectType: 1}));
         setOpen(true);
         setProjectType(false);
         projectData.resetFields();
+        projectData.setFieldValue("projectType", 1);
         break;
       // 集成项目
       case "2":
-        setEditInfo((prevState) => ({...prevState, title: '集成', opr: '创建新的', projectType: '2'}));
+        setEditInfo((prevState) => ({...prevState, title: '集成', opr: '创建新的', projectType: 0}));
         setOpen(true);
         setProjectType(false);
         projectData.resetFields();
+        projectData.setFieldValue("projectType", 0);
         break;
       case "3":
         setOpen(false);
@@ -97,8 +100,26 @@ const ProjectMaintain: React.FC = () => {
   const editProject = (value: Project) => {
     projectData.setFieldsValue(value);
     setIsEdit(true);
-    setEditInfo((prevState) => ({...prevState, title: '接口', opr: '编辑'}));
+    const projectType = value.projectType
+    setEditInfo((prevState) => ({
+      ...prevState,
+      title: projectType === 1 ? "接口" : "集成",
+      opr: '编辑',
+      projectType: projectType
+    }));
     setOpen(true);
+  }
+
+  /**
+   * 删除项目
+   * @param projectId 项目ID
+   */
+  const delProject = async (projectId: string) => {
+    const result = await deleteProject(projectId);
+    if (result.code === 200) {
+      message.success("删除成功");
+      await onSearch(searchForm.getFieldsValue());
+    }
   }
 
   const items: MenuProps['items'] = [
@@ -201,7 +222,7 @@ const ProjectMaintain: React.FC = () => {
           <Popconfirm
             title="删除菜单"
             description="确定删除这条菜单数据吗?"
-            onConfirm={() => alert("删除")}
+            onConfirm={() => delProject(record.id)}
             okText="确认"
             cancelText="取消"
           >
@@ -227,7 +248,7 @@ const ProjectMaintain: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="项目类型" name="type" style={{marginBottom: 0}}>
+              <Form.Item label="项目类型" name="projectType" style={{marginBottom: 0}}>
                 <Select options={[
                   {value: '-1', label: '全部'},
                   {value: '0', label: '集成项目'},
@@ -261,7 +282,7 @@ const ProjectMaintain: React.FC = () => {
       {/* 编辑弹窗 */}
       <ProjectInfoModal open={open} setOpen={setOpen} isEdit={isEdit} changeModal={changeModal}
                         projectName={projectName}
-                        editInfo={editInfo} projectData={projectData}/>
+                        editInfo={editInfo} projectData={projectData} onSearch={onSearch} searchForm={searchForm}/>
     </>
   );
 }

@@ -8,7 +8,12 @@ import {addProject, updateProject} from "@/services/engine/project/projectMainta
 const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
   const inputRef = useRef<InputRef>(null);
   const navigate = useNavigate();
-  const {open, setOpen, isEdit, changeModal, projectName, editInfo, projectData} = props;
+  const {
+    open, setOpen, isEdit,
+    changeModal, projectName, editInfo, projectData,
+    searchForm,
+    onSearch
+  } = props;
   const [messageApi, contextHolder] = message.useMessage();
   /**
    * 窗口打开关闭
@@ -42,6 +47,7 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
       const result = await addProject(values);
       if (result.code === 200) {
         setOpen(false);
+        messageApi.success("新增成功");
         // 如果是新增，则新增完成就跳转到设计界面
         navigate('/engine/project/projectMaintain/designer', {state: values});
       } else {
@@ -52,6 +58,7 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
       if (result.code === 200) {
         messageApi.success(result.message);
         setOpen(false);
+        onSearch(searchForm.getFieldsValue());
       }
     }
   }
@@ -95,13 +102,16 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
           <Form.Item name="id" label="项目id" hidden>
             <Input/>
           </Form.Item>
+          <Form.Item name="projectType" label="项目类型" hidden>
+            <Input/>
+          </Form.Item>
           <Form.Item name="projectName" label="项目名称" rules={[{required: true, message: '请输入项目名称'}]}>
             <Input ref={inputRef} placeholder="项目名称"/>
           </Form.Item>
           <Form.Item name="description" label="描述">
             <Input.TextArea rows={4} placeholder="描述"/>
           </Form.Item>
-          {editInfo.projectType === '1' ?
+          {editInfo.projectType === 1 ?
             <Form.Item name="log" label="消息日志记录">
               <Select options={[
                 {value: '1', label: '打开'},

@@ -160,7 +160,7 @@ const Menu: React.FC = () => {
     const result = await deletePermission(value.id);
     if (result === 1) {
       message.success("删除成功");
-      getAllMenus();
+      await getAllMenus();
     }
   }
 

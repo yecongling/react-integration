@@ -14,6 +14,8 @@ export interface ProjectInfoProps {
   isEdit: boolean;
   changeModal: (type: string) => void;
   projectName:  React.RefObject<InputRef>;
-  editInfo: {title: string, opr: string, projectType: string};
+  editInfo: {title: string, opr: string, projectType: number};
   projectData:  FormInstance;
+  onSearch: (value: any) => void;
+  searchForm: FormInstance
 }

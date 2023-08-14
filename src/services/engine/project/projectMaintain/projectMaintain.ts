@@ -41,3 +41,15 @@ export const updateProject = (params: Project) => {
     }
   )
 }
+
+export const deleteProject = (projectId: string) => {
+  return defHttp.post<Result<any>>(
+    {
+      url: ProjectApi.deleteProject,
+      params: {projectId}
+    },
+    {
+      isTransformResponse: false
+    }
+  )
+}
