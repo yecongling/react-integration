@@ -43,13 +43,14 @@ export const updateProject = (params: Project) => {
 }
 
 export const deleteProject = (projectId: string) => {
-  return defHttp.post<Result<any>>(
+  return defHttp.delete<Result<any>>(
     {
       url: ProjectApi.deleteProject,
       params: {projectId}
     },
     {
-      isTransformResponse: false
+      isTransformResponse: false,
+      joinParamsToUrl: true
     }
   )
 }
