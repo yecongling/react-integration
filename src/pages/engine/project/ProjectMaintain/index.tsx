@@ -17,6 +17,7 @@ import {
   Table
 } from "antd";
 import {
+  CompressOutlined,
   DownOutlined,
   FullscreenOutlined,
   QuestionCircleOutlined,
@@ -192,10 +193,13 @@ const ProjectMaintain: React.FC = () => {
     },
     {
       title: "类型",
-      dataIndex: 'type',
+      dataIndex: 'projectType',
       width: '5%',
       align: 'center',
-      render: function () {
+      render: function (text) {
+        if (text === 1) {
+          return <CompressOutlined/>;
+        }
         return <FullscreenOutlined/>;
       }
     },
