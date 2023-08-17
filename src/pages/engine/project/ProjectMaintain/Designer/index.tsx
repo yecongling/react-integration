@@ -42,7 +42,7 @@ const Designer: React.FC = () => {
         </Col>
         <Col span={20}>
           <Row className="designer-toolbar">
-            <Card style={{height: '44px', width: '100%'}}
+            <Card style={{height: '44px', width: '100%', paddingRight: '20px'}}
                   bodyStyle={{display: 'flex', height: '100%', alignItems: 'center'}}>
               <Col span={10} style={{textAlign: 'center'}}>
                 <Tag color="#108ee9" style={{
