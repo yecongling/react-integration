@@ -164,7 +164,6 @@ const ProjectMaintain: React.FC = () => {
       dataIndex: 'projectName',
       width: '15%',
       align: 'left',
-      sorter: true,
       ellipsis: true,
       render: function (text, record) {
         return (
