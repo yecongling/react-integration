@@ -293,7 +293,6 @@ const Database: React.FC = () => {
           <Form.Item name="datasourceType" label="数据库类型" extra="数据源的类型"
                      rules={[{required: true, message: '请选择数据库类型'}]}>
             <Select options={[
-              {value: '-1', label: '请选择……'},
               {value: '1', label: 'MySQL5.5'},
               {value: '2', label: 'MySQL5.7+'},
               {value: '3', label: 'Oracle'},
