@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Card, Col, Drawer, Input, Row, Space, Tabs, TabsProps, Tag} from "antd";
+import {Button, Card, Col, Input, notification, Row, Space, Tabs, TabsProps, Tag} from "antd";
 import './index.less';
 import {useLocation, useNavigate} from "react-router-dom";
 import {
@@ -17,11 +17,13 @@ import {
   TableOutlined,
   UndoOutlined
 } from "@ant-design/icons";
+import Setting from "@/pages/engine/project/ProjectMaintain/Designer/Setting";
 
 const Designer: React.FC = () => {
   const navigate = useNavigate();
-  const [openPanel, setOpenPanel] = useState(false);
   const location = useLocation();
+  const [notifyPanel, contextHolder] = notification.useNotification();
+  const [openEditModal, setOpenEditModal] = useState(false);
   const items: TabsProps['items'] = [
     {
       key: "service",
@@ -44,8 +46,20 @@ const Designer: React.FC = () => {
       children: <>触发器</>
     }
   ]
+
+  /**
+   * 点击面板
+   */
+  const clickPanel = () => {
+    notifyPanel.success({
+      message: "运行成功",
+      description: <>这是一个运行成功的面板</>
+    })
+  }
+
   return (
     <>
+      {contextHolder}
       <Row style={{height: '100%'}} gutter={6}>
         <Col span={4}>
           <Card style={{height: '100%'}} bodyStyle={{padding: '10px'}}>
@@ -76,14 +90,17 @@ const Designer: React.FC = () => {
               </Col>
               <Col span={10} style={{textAlign: 'right'}}>
                 <Space>
-                  <Button type="primary" title="界面设计" icon={<SettingOutlined/>} onClick={() => alert("界面设计")}/>
+                  <Button type="primary" title="界面设计" icon={<SettingOutlined/>}
+                          onClick={() => setOpenEditModal(true)}/>
                   <Button type="primary" title="保存" icon={<SaveOutlined/>} onClick={() => alert("保存")}>保存</Button>
-                  <Button type="primary" title="导入流程" icon={<ImportOutlined/>}>导入</Button>
-                  <Button type="primary" title="导出流程" icon={<ExportOutlined/>}>导出</Button>
+                  <Button type="primary" title="导入流程" icon={<ImportOutlined/>}
+                          onClick={() => alert("导入")}>导入</Button>
+                  <Button type="primary" title="导出流程" icon={<ExportOutlined/>}
+                          onClick={() => alert("导出")}>导出</Button>
                   <Button type="primary" icon={<RollbackOutlined/>} onClick={() => {
                     navigate('/engine/project/projectMaintain')
                   }}>返回</Button>
-                  <Button type="default" icon={<MenuOutlined/>} title="面板" onClick={() => setOpenPanel(true)}/>
+                  <Button type="default" icon={<MenuOutlined/>} title="面板" onClick={clickPanel}/>
                 </Space>
               </Col>
             </Card>
@@ -97,9 +114,7 @@ const Designer: React.FC = () => {
           </Row>
         </Col>
       </Row>
-      <Drawer open={openPanel}>
-        问题面板
-      </Drawer>
+      <Setting open={openEditModal} onOk={() => setOpenEditModal(false)} onCancel={() => setOpenEditModal(false)}/>
     </>
   );
 }
