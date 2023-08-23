@@ -24,6 +24,7 @@
     "mockjs": "^1.1.0",
     "react": "^18.2.0",
     "react-activation": "^0.12.4",
+    "react-contextmenu": "^2.14.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
     "react-icons": "^4.10.1",
