@@ -243,7 +243,7 @@ const ProjectMaintain: React.FC = () => {
     <>
       {/* 查询区域 */}
       <Card>
-        <Form form={searchForm} onFinish={onSearch} initialValues={{type: '-1'}}>
+        <Form form={searchForm} onFinish={onSearch} initialValues={{projectType: '-1'}}>
           <Row gutter={24}>
             <Col span={6}>
               <Form.Item label="项目名称" name="name" style={{marginBottom: 0}}>
