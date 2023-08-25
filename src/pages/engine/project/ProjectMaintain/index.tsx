@@ -19,14 +19,15 @@ import {
 } from "antd";
 import {
   BranchesOutlined,
-  CompressOutlined, CopyOutlined,
+  CompressOutlined,
+  CopyOutlined,
   DeleteOutlined,
   EditOutlined,
   EllipsisOutlined,
   FullscreenOutlined,
-  MoreOutlined,
   QuestionCircleOutlined,
-  SearchOutlined, SwapOutlined,
+  SearchOutlined,
+  SwapOutlined,
   SyncOutlined
 } from "@ant-design/icons";
 import {ColumnsType} from "antd/es/table";
@@ -132,7 +133,7 @@ const ProjectMaintain: React.FC = () => {
     {
       key: "copy",
       label: "复制",
-      icon: <CopyOutlined />,
+      icon: <CopyOutlined/>,
       onClick: () => {
         alert("复制");
       }
@@ -140,7 +141,7 @@ const ProjectMaintain: React.FC = () => {
     {
       key: "transfer",
       label: "转换",
-      icon: <SwapOutlined />,
+      icon: <SwapOutlined/>,
       onClick: () => {
         alert("转换")
       }
