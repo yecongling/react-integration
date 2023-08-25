@@ -241,9 +241,7 @@ const ProjectMaintain: React.FC = () => {
             okText="确认"
             cancelText="取消"
           >
-            <Tooltip placement="top" title="删除">
-              <DeleteOutlined style={{fontSize: '18px', color: '#ff4d4f'}}/>
-            </Tooltip>
+            <DeleteOutlined style={{fontSize: '18px', color: '#ff4d4f'}}/>
           </Popconfirm>
           <Dropdown menu={{items}}>
             <EllipsisOutlined style={{fontSize: '18px', cursor: 'pointer'}}/>
