@@ -17,7 +17,7 @@ import {
   UserOutlined
 } from "@ant-design/icons";
 import avatar from "@/assets/images/avatar.png";
-import BreadcrumbNav from "@/components/header/BreadcrumbNav";
+// import BreadcrumbNav from "@/components/header/BreadcrumbNav";
 import FullScreen from "@/components/header/FullScreen";
 import {useNavigate} from "react-router-dom";
 /*import Setting from "@/component/header/Setting.tsx";*/
@@ -102,7 +102,7 @@ const Header: React.FC = () => {
               {React.createElement(collapse ? MenuUnfoldOutlined : MenuFoldOutlined)}
           </div>
       </span>
-        <BreadcrumbNav/>
+        {/*<BreadcrumbNav/>*/}
         <div className="dis-fl js-sb ai-ct toolbox">
           <Space size="large">
             <Tooltip placement="bottom" title="搜索">

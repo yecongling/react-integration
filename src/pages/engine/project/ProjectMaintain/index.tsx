@@ -14,14 +14,18 @@ import {
   Select,
   Space,
   Switch,
-  Table
+  Table,
+  Tooltip
 } from "antd";
 import {
-  CompressOutlined,
-  DownOutlined,
+  BranchesOutlined,
+  CompressOutlined, CopyOutlined,
+  DeleteOutlined,
+  EditOutlined,
   FullscreenOutlined,
+  MoreOutlined,
   QuestionCircleOutlined,
-  SearchOutlined,
+  SearchOutlined, SwapOutlined,
   SyncOutlined
 } from "@ant-design/icons";
 import {ColumnsType} from "antd/es/table";
@@ -127,6 +131,7 @@ const ProjectMaintain: React.FC = () => {
     {
       key: "copy",
       label: "复制",
+      icon: <CopyOutlined />,
       onClick: () => {
         alert("复制");
       }
@@ -134,6 +139,7 @@ const ProjectMaintain: React.FC = () => {
     {
       key: "transfer",
       label: "转换",
+      icon: <SwapOutlined />,
       onClick: () => {
         alert("转换")
       }
@@ -197,9 +203,9 @@ const ProjectMaintain: React.FC = () => {
       align: 'center',
       render: function (text) {
         if (text === 1) {
-          return <CompressOutlined/>;
+          return <Tooltip title="集成项目"><CompressOutlined/></Tooltip>;
         }
-        return <FullscreenOutlined/>;
+        return <Tooltip title="接口项目"><FullscreenOutlined/></Tooltip>;
       }
     },
     {
@@ -217,11 +223,15 @@ const ProjectMaintain: React.FC = () => {
       width: '10%',
       align: 'center',
       render: function (_text, record) {
-        return <Space size={8}>
-          <Button type="primary" size="small" onClick={() => editProject(record)}>编辑</Button>
-          <Button type="primary" size="small" onClick={() => {
-            navigate('/engine/project/projectMaintain/designer', {state: record});
-          }}>设计</Button>
+        return <Space size={10}>
+          <Tooltip placement="top" title="编辑">
+            <EditOutlined style={{fontSize: '18px'}} onClick={() => editProject(record)}/>
+          </Tooltip>
+          <Tooltip placement="top" title="设计">
+            <BranchesOutlined style={{fontSize: '18px'}} onClick={() => {
+              navigate('/engine/project/projectMaintain/designer', {state: record});
+            }}/>
+          </Tooltip>
           <Popconfirm
             title="删除菜单"
             description="确定删除这条菜单数据吗?"
@@ -229,10 +239,12 @@ const ProjectMaintain: React.FC = () => {
             okText="确认"
             cancelText="取消"
           >
-            <Button type="primary" danger size="small">删除</Button>
+            <Tooltip placement="top" title="删除">
+              <DeleteOutlined style={{fontSize: '18px', color: '#ff4d4f'}}/>
+            </Tooltip>
           </Popconfirm>
           <Dropdown menu={{items}}>
-            <Button type="default" size="small">更多<DownOutlined/></Button>
+            <MoreOutlined style={{fontSize: '18px', cursor: 'pointer'}} rotate={90}/>
           </Dropdown>
         </Space>;
       }
@@ -272,7 +284,6 @@ const ProjectMaintain: React.FC = () => {
         </Space>
         <Table
           style={{marginTop: '6px'}}
-          bordered
           size="middle"
           columns={columns}
           dataSource={projectSource}

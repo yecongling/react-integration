@@ -321,7 +321,6 @@ const Menu: React.FC = () => {
           style={{marginTop: '6px'}}
           className="table"
           scroll={{x: 'max-content', y: 'calc(100vh - 400px)'}}
-          bordered
           size="middle"
           columns={columns}
           dataSource={tableData}
