@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Col, Modal, Row} from "antd";
+import {Col, Modal, Row} from "antd";
 import {CompressOutlined, FullscreenOutlined} from "@ant-design/icons";
 import {ProjectTypeProps} from "@/pages/engine/project/ProjectMaintain/components/ProjectState.ts";
 
@@ -30,11 +30,8 @@ const ProjectTypeModal: React.FC<ProjectTypeProps> = (props) => {
              maskClosable={false}
              title="选择项目类型"
              width={600}
-             footer={[
-               <Button key="cancel" type="default" onClick={() => {
-                 setProjectType(false)
-               }}>取消</Button>
-             ]}
+             footer={null}
+             onCancel={() => setProjectType(false)}
              afterOpenChange={handleAfterOpen}
 
       >

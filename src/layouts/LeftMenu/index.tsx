@@ -2,17 +2,19 @@ import React, {useEffect, useState} from "react";
 import Sider from "antd/es/layout/Sider";
 import "./index.less";
 import * as Icons from "@ant-design/icons";
-import favicon from "@/assets/images/favicon.png";
-import {Image, Menu, MenuProps, Spin} from "antd";
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
+import {Menu, MenuProps, Spin, Tooltip} from "antd";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import SvgIcon from "@/components/SvgIcon";
 import {RouteItem} from "@/services/system/permission/menuModel";
 import {getOpenKeys, handleRouter} from "@/utils/util.ts";
 import {getMenuList} from "@/services/system/permission/permission.ts";
+import {setCollapse} from "@/store/modules/global.ts";
 
 const LeftMenu: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {pathname} = useLocation();
   const [menuList, setMenuList] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -20,9 +22,9 @@ const LeftMenu: React.FC = () => {
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   // 通过useSelector直接拿到store中定义的value
   const {collapse, theme} = useSelector((store: any) => store.global);
-  const [isCollapse, setCollapse] = useState(collapse);
+  const [isCollapse, changeCollapse] = useState(collapse);
   useEffect(() => {
-    setCollapse(collapse);
+    changeCollapse(collapse);
   }, [collapse]);
   // 定义 menu 类型
   type MenuItem = Required<MenuProps>["items"][number];
@@ -110,26 +112,12 @@ const LeftMenu: React.FC = () => {
       style={{
         overflowX: 'hidden',
         zIndex: 1000,
-        boxShadow: '2px 0 8px 0 rgba(29,35,41,.1)'
+        boxShadow: '2px 2px 8px 0 rgba(29,35,41,.1)'
       }}
       theme={theme}
       collapsed={isCollapse}
       collapsible
     >
-      <Link to="/home">
-        <div className="hd-64 mgr-01 dis-fl ai-ct jc-ct">
-          <Image width={25} src={favicon} preview={false}/>
-          {collapse ? '' : <p style={{
-            fontWeight: 'bold',
-            margin: '0 12px',
-            fontSize: '20px',
-            color: '#1890ff'
-          }}>
-            integration
-          </p>
-          }
-        </div>
-      </Link>
       <Spin wrapperClassName="side-menu" spinning={loading} tip="Loading...">
         <Menu
           mode="inline"
@@ -141,6 +129,21 @@ const LeftMenu: React.FC = () => {
           onOpenChange={onOpenChange}
         />
       </Spin>
+      <div className="collapse">
+        <span
+          style={{
+            cursor: 'pointer',
+            fontSize: '16px'
+          }}
+          onClick={() => dispatch(setCollapse({collapse: !collapse}))}
+          className="btnbor"
+        >
+          <div style={{padding: '10px 20px 10px 10px', display: 'flex', justifyContent: 'end'}}>
+            {collapse ? <Tooltip title="展开"><MenuUnfoldOutlined/></Tooltip> :
+              <Tooltip title="收起"><MenuFoldOutlined/></Tooltip>}
+          </div>
+      </span>
+      </div>
     </Sider>
   )
 }

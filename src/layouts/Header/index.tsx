@@ -1,7 +1,5 @@
 import React from "react";
-import {Avatar, Badge, Dropdown, Layout, MenuProps, Modal, Space, Tooltip} from "antd";
-import {useDispatch, useSelector} from "react-redux";
-import {setCollapse} from "@/store/modules/global.ts";
+import {Avatar, Badge, Dropdown, Image, Layout, MenuProps, Modal, Space, Tooltip} from "antd";
 import {
   BellOutlined,
   EditOutlined,
@@ -9,8 +7,6 @@ import {
   GithubOutlined,
   LockOutlined,
   LogoutOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   SearchOutlined,
   SettingOutlined,
   SyncOutlined,
@@ -19,12 +15,11 @@ import {
 import avatar from "@/assets/images/avatar.png";
 // import BreadcrumbNav from "@/components/header/BreadcrumbNav";
 import FullScreen from "@/components/header/FullScreen";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import favicon from "@/assets/images/favicon.png";
 /*import Setting from "@/component/header/Setting.tsx";*/
 
 const Header: React.FC = () => {
-  const dispatch = useDispatch();
-  const {collapse} = useSelector((store: any) => store.global);
   const [modal, contextHolder] = Modal.useModal();
   const navigate = useNavigate();
   /**
@@ -90,18 +85,21 @@ const Header: React.FC = () => {
           borderBottom: ' 1px solid #f0f1f2',
           backgroundColor: '#fff',
         }}>
-      <span
-        style={{
-          cursor: 'pointer',
-          fontSize: '16px'
-        }}
-        onClick={() => dispatch(setCollapse({collapse: !collapse}))}
-        className="btnbor"
-      >
-          <div style={{marginLeft: '14px', padding: '10px 0'}}>
-              {React.createElement(collapse ? MenuUnfoldOutlined : MenuFoldOutlined)}
-          </div>
-      </span>
+        <div className="dis-fl js-sb ai-ct toolbox" style={{paddingLeft: '20px'}}>
+          <Link to="/home">
+            <div className="hd-64 mgr-01 dis-fl ai-ct jc-ct">
+              <Image width={25} src={favicon} preview={false}/>
+              <p style={{
+                fontWeight: 'bold',
+                margin: '0 12px',
+                fontSize: '20px',
+                color: '#1890ff'
+              }}>
+                integration
+              </p>
+            </div>
+          </Link>
+        </div>
         {/*<BreadcrumbNav/>*/}
         <div className="dis-fl js-sb ai-ct toolbox">
           <Space size="large">

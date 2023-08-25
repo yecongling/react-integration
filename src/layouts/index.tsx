@@ -15,9 +15,9 @@ const Layouts: React.FC = () => {
       }
     }} locale={ZhCN}>
       <Layout style={{height: "100%"}}>
-        <LeftMenu/>
+        <Header/>
         <Layout>
-          <Header/>
+          <LeftMenu/>
           <Content/>
         </Layout>
       </Layout>
