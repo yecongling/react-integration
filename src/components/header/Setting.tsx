@@ -1,25 +1,19 @@
 import React, {useState} from "react";
-import {Button, Col, ColorPicker, ColorPickerProps, Divider, Drawer, Row, Space, Switch} from "antd";
-import {CloseOutlined, SettingOutlined} from "@ant-design/icons";
+import {Col, ColorPicker, ColorPickerProps, Divider, Drawer, Row, Space, Switch} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {setColorPrimary, setTheme} from "@/store/modules/global.ts";
 
+export type SettingProps = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 /* 系统配置界面 */
-const Setting: React.FC = () => {
+const Setting: React.FC<SettingProps> = (props) => {
+  const {open, setOpen} = props;
   const dispatch = useDispatch();
-  const [open, changeOpen] = useState(false);
-  const [right, setRight] = useState(0);
   const {colorPrimary} = useSelector((store: any) => store.global);
   const [value, setValue] = useState<ColorPickerProps['value']>(colorPrimary);
-  const changeDrawer = () => {
-    changeOpen(!open);
-    if (!open) {
-      setRight(330);
-    } else {
-      setRight(0);
-    }
-  }
 
   /**
    * 改变主题
@@ -31,19 +25,7 @@ const Setting: React.FC = () => {
 
   return (
     <>
-      <Button type="primary" size="small" onClick={changeDrawer}
-              style={{
-                width: '42px',
-                height: '42px',
-                zIndex: '1001',
-                top: '40%',
-                position: 'fixed',
-                transition: 'all 0.3s',
-                right: `${right}` + 'px'
-              }}>
-        {open ? <CloseOutlined style={{fontSize: '18px'}}/> : <SettingOutlined style={{fontSize: '18px'}}/>}
-      </Button>
-      <Drawer title="主题配置" placement="right" open={open} closable={false} width={330}>
+      <Drawer title="主题配置" placement="right" open={open} width={330} onClose={() => setOpen(false)}>
         <Divider><strong>主题模式</strong></Divider>
         <Space direction="vertical" size="middle" style={{display: 'flex'}}>
           <Row>

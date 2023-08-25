@@ -1,10 +1,12 @@
-import React from "react";
-import {Avatar, Badge, Dropdown, Image, Layout, MenuProps, Modal, Space, Tooltip} from "antd";
+import React, {useState} from "react";
+import {Avatar, Badge, Button, Drawer, Dropdown, Image, Layout, MenuProps, Modal, Space, Tooltip} from "antd";
 import {
+  BarsOutlined,
   BellOutlined,
   EditOutlined,
   ExclamationCircleOutlined,
   GithubOutlined,
+  GroupOutlined,
   LockOutlined,
   LogoutOutlined,
   SearchOutlined,
@@ -17,10 +19,13 @@ import avatar from "@/assets/images/avatar.png";
 import FullScreen from "@/components/header/FullScreen";
 import {Link, useNavigate} from "react-router-dom";
 import favicon from "@/assets/images/favicon.png";
+import Setting from "@/components/header/Setting.tsx";
 /*import Setting from "@/component/header/Setting.tsx";*/
 
 const Header: React.FC = () => {
   const [modal, contextHolder] = Modal.useModal();
+  const [openGroup, setOpenGroup] = useState<boolean>(false);
+  const [openSetting, setOpenSetting] = useState<boolean>(false);
   const navigate = useNavigate();
   /**
    * 跳转到github
@@ -49,11 +54,6 @@ const Header: React.FC = () => {
     },
     {
       key: '4',
-      label: '系统设置',
-      icon: <SettingOutlined/>
-    },
-    {
-      key: '5',
       label: '退出登录',
       icon: <LogoutOutlined/>,
       disabled: false,
@@ -77,6 +77,29 @@ const Header: React.FC = () => {
 
   return (
     <>
+      <Drawer
+        open={openGroup}
+        title={
+          <div className="mgr-01 dis-fl ai-ct jc-ct">
+            <Image width={25} src={favicon} preview={false}/>
+            <p style={{
+              fontWeight: 'bold',
+              margin: '0 12px',
+              fontSize: '20px',
+              color: '#1890ff'
+            }}>
+              integration的分组
+            </p>
+          </div>}
+        maskClosable
+        closeIcon={false}
+        placement="left"
+        width={280}
+        onClose={() => setOpenGroup(false)}
+        footer={<Button style={{width: '100%'}} type="text" icon={<GroupOutlined/>}>编辑分组</Button>}
+      >
+        分组信息
+      </Drawer>
       <Layout.Header
         className="ant-layout-header dis-fl jc-sb ai-ct"
         style={{
@@ -85,7 +108,16 @@ const Header: React.FC = () => {
           borderBottom: ' 1px solid #f0f1f2',
           backgroundColor: '#fff',
         }}>
-        <div className="dis-fl js-sb ai-ct toolbox" style={{paddingLeft: '20px'}}>
+        <div className="dis-fl js-sb ai-ct toolbox">
+          <Tooltip title="分组信息" placement="right">
+            <Button type="text"
+                    style={{margin: '0 10px 0 20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                    icon={<BarsOutlined style={{fontSize: '18px'}}/>}
+                    onClick={() => {
+                      setOpenGroup(true)
+                    }}
+            />
+          </Tooltip>
           <Link to="/home">
             <div className="hd-64 mgr-01 dis-fl ai-ct jc-ct">
               <Image width={25} src={favicon} preview={false}/>
@@ -117,6 +149,9 @@ const Header: React.FC = () => {
                 <BellOutlined style={{cursor: 'pointer', fontSize: '18px'}}/>
               </Badge>
             </Tooltip>
+            <Tooltip placement="bottom" title="系统设置">
+              <SettingOutlined style={{cursor: 'pointer', fontSize: '18px'}} onClick={() => setOpenSetting(true)}/>
+            </Tooltip>
             <FullScreen/>
             <Dropdown menu={{items}} placement="bottom">
               <div className="login-user" style={{
@@ -135,7 +170,7 @@ const Header: React.FC = () => {
         </div>
       </Layout.Header>
       {/*<FloatBtn/>*/}
-      {/*<Setting/>*/}
+      <Setting open={openSetting} setOpen={setOpenSetting}/>
       {contextHolder}
     </>
   )

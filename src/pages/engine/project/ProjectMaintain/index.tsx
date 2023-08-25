@@ -22,6 +22,7 @@ import {
   CompressOutlined, CopyOutlined,
   DeleteOutlined,
   EditOutlined,
+  EllipsisOutlined,
   FullscreenOutlined,
   MoreOutlined,
   QuestionCircleOutlined,
@@ -244,7 +245,7 @@ const ProjectMaintain: React.FC = () => {
             </Tooltip>
           </Popconfirm>
           <Dropdown menu={{items}}>
-            <MoreOutlined style={{fontSize: '18px', cursor: 'pointer'}} rotate={90}/>
+            <EllipsisOutlined style={{fontSize: '18px', cursor: 'pointer'}}/>
           </Dropdown>
         </Space>;
       }
