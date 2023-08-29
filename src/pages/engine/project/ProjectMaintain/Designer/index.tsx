@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Card, Col, Input, notification, Row, Space, Tabs, TabsProps, Tag} from "antd";
+import {Button, Card, Col, Input, List, notification, Row, Space, Tabs, TabsProps, Tag} from "antd";
 import './index.less';
 import {useLocation, useNavigate} from "react-router-dom";
 import {
@@ -10,6 +10,7 @@ import {
   FullscreenOutlined,
   ImportOutlined,
   MenuOutlined,
+  PlusOutlined,
   RedoOutlined,
   RollbackOutlined,
   SaveOutlined,
@@ -18,17 +19,32 @@ import {
   UndoOutlined
 } from "@ant-design/icons";
 import Setting from "@/pages/engine/project/ProjectMaintain/Designer/Setting";
+import Endpoint from "@/pages/engine/project/ProjectMaintain/Designer/components/server/Endpoint";
 
 const Designer: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [notifyPanel, contextHolder] = notification.useNotification();
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openEndpointModal, setOpenEndpointModal] = useState(false);
   const items: TabsProps['items'] = [
     {
       key: "service",
       label: "服务",
-      children: <>终端</>,
+      children: <>
+        <List
+          header={<div>web服务<Button size="small" icon={<PlusOutlined/>} onClick={() => {
+            setOpenEndpointModal(true)
+          }}/></div>}
+          footer={null}
+          dataSource={['web服务']}
+          renderItem={(item) => (
+            <List.Item>
+              {item}
+            </List.Item>
+          )}
+        />
+      </>,
     },
     {
       key: "route",
@@ -43,7 +59,7 @@ const Designer: React.FC = () => {
     {
       key: "timer",
       label: "定时器",
-      children: <>触发器</>
+      children: <>定时器</>
     }
   ]
 
@@ -60,9 +76,10 @@ const Designer: React.FC = () => {
   return (
     <>
       {contextHolder}
+      <Endpoint open={openEndpointModal} onCancel={() => setOpenEditModal(false)}/>
       <Row style={{height: '100%'}} gutter={6}>
         <Col span={4}>
-          <Card style={{height: '100%'}} bodyStyle={{padding: '10px'}}>
+          <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
             <Input.Search autoFocus placeholder="通过名称检索" enterButton onSearch={() => alert("检索")}/>
             <Tabs tabBarStyle={{marginTop: '6px'}} items={items}/>
           </Card>

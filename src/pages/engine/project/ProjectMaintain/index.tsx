@@ -224,6 +224,7 @@ const ProjectMaintain: React.FC = () => {
       dataIndex: 'opr',
       width: '10%',
       align: 'center',
+      fixed: 'right',
       render: function (_text, record) {
         return <Space size={10}>
           <Tooltip placement="top" title="编辑">
