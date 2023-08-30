@@ -24,6 +24,7 @@ import Endpoint from "@/pages/engine/project/ProjectMaintain/Designer/components
 const Designer: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location.state)
   const [notifyPanel, contextHolder] = notification.useNotification();
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openEndpointModal, setOpenEndpointModal] = useState(false);
