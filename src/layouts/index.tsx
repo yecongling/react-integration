@@ -20,6 +20,7 @@ const Layouts: React.FC = () => {
           <LeftMenu/>
           <Content/>
         </Layout>
+        <a href="https://beian.miit.gov.cn/" target="_blank" style={{position: "absolute", bottom: 0, marginLeft: '45%'}}>蜀ICP备2023022276号-1</a>
       </Layout>
     </ConfigProvider>
   )

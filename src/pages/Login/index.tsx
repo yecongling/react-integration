@@ -104,6 +104,7 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
+      <a href="https://beian.miit.gov.cn/" target="_blank" style={{position: "absolute", bottom: 0, marginLeft: '45%'}}>蜀ICP备2023022276号-1</a>
     </>
 
 
