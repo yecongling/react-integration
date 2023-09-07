@@ -13,6 +13,8 @@ const Editor: React.FC<EditorProps> = (props) => {
       const width = canvasRef.current.width
       const height = canvasRef.current.height
       const margins = [100, 120, 100, 120];
+      // 清空面板
+      ctx.clearRect(0, 0, width, height);
       const marginIndicatorSize = 35;
       ctx.save()
       ctx.translate(0.5, 0.5)
@@ -42,7 +44,7 @@ const Editor: React.FC<EditorProps> = (props) => {
       ctx.restore()
 
       ctx.font = "20px 宋体";
-      ctx.fillText("这只是一个示例的canvas（目前暂停该功能继续开发）", 120, 120);
+      ctx.fillText("老子要打造一个类似Google文档的东西", 120, 120);
     }
   }, [])
 
