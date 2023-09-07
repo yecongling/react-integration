@@ -74,10 +74,17 @@ const Designer: React.FC = () => {
     })
   }
 
+  /**
+   * 关闭弹窗
+   */
+  const cancelEndpointModal = () => {
+    setOpenEndpointModal(false);
+  }
+
   return (
     <>
       {contextHolder}
-      <Endpoint open={openEndpointModal} onCancel={() => setOpenEditModal(false)}/>
+      <Endpoint open={openEndpointModal} onCancel={cancelEndpointModal}/>
       <Row style={{height: '100%'}} gutter={6}>
         <Col span={4}>
           <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
