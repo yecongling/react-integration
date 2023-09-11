@@ -3,6 +3,7 @@ import {Button, Checkbox, Col, Form, Input, Row} from "antd";
 import logo from "@/assets/images/logo.png";
 import {LockOutlined, SecurityScanOutlined, UserOutlined} from "@ant-design/icons";
 import "./login.less";
+import filing from '@/assets/images/filing.png';
 import {useNavigate} from "react-router-dom";
 
 const Login: React.FC = () => {
@@ -13,7 +14,8 @@ const Login: React.FC = () => {
   // const [loading, setLoading] = useState<boolean>(false);
   const [code, setCode] = useState(Math.floor(Math.random() * 10000).toString());
   const submit = async () => {
-    navigate("/");
+    sessionStorage.setItem('login', 'true');
+    navigate("/home");
   }
 
   /**
@@ -104,7 +106,28 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
-      <a href="https://beian.miit.gov.cn/" target="_blank" style={{position: "absolute", bottom: 0, marginLeft: '45%'}}>蜀ICP备2023022276号-1</a>
+      <div style={{width: '440px', margin: '0 auto', padding: '20px 0'}}>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202001603"
+           style={{display: 'inline-block', textDecoration: 'none', height: '20px', lineHeight: '20px'}}>
+          <img src={filing} style={{float: 'left'}} alt="无图片"/>
+          <p style={{
+            float: 'left',
+            height: '20px',
+            lineHeight: '20px',
+            margin: '0px 0px 0px 5px',
+            color: '#939393'
+          }}>川公网安备
+            51012202001603号</p></a>
+        <a href="https://beian.miit.gov.cn/" target="_blank"
+           style={{
+             position: "absolute",
+             display: 'inline-block',
+             color: '#939393',
+             textDecoration: "none",
+             marginLeft: '6px'
+           }}>蜀ICP备2023022276号-1</a>
+      </div>
+
     </>
 
 

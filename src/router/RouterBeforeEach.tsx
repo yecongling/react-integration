@@ -7,12 +7,12 @@ const RouterBeforeEach: React.FC = () => {
   useEffect(() => {
     // 需要添加从后台获取路由的方法，因为在刷新的时候，可能路由就会没了
     // const obj = checkRouterAuth(location.pathname)
-    // const blLogin = sessionStorage.getItem('login')
-    // if (obj && obj.auth && blLogin == 'false') {
-    //   navigate('/login', {replace: true})
-    // } else {
-    navigate("/emr/designCenter");
-    // }
+    const blLogin = sessionStorage.getItem('login')
+    if (blLogin == 'false' || !blLogin) {
+      navigate('/login', {replace: true})
+    } else {
+      navigate("emr/designCenter");
+    }
   }, [])
   return <Outlet/>
 }
