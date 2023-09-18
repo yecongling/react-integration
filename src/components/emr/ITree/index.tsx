@@ -8,9 +8,9 @@ const ITree: React.FC<TreeProps> = (props) => {
   return (
     <>
       <Tree {...props} treeData={props.treeData} selectedKeys={selectedKey} style={{marginTop: '6px'}}
-            onDoubleClick={(_a, b) => {
+            onClick={(_a, b) => {
               setSelectedKey([b.key]);
-              alert("选中的节点是：" + b.title)
+              // alert("选中的节点是：" + b.title)
             }}></Tree>
     </>
   )
