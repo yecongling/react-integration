@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Col} from "antd";
+import {Col} from "antd";
 import Toolbar from "@/components/emr/editor/Toolbar";
 import Editor from "@/components/emr/editor/Editor";
 import Footer from "@/components/emr/editor/Footer";
@@ -13,13 +13,14 @@ const Designer: React.FC<DesignerProps> = (props) => {
   return (
     <>
       <Col span={span} className="editor-container" style={{height: '100%'}}>
-        <Card style={{height: '100%'}} bodyStyle={{padding: '0', height: '100%'}}>
+        <section
+          style={{height: '100%', padding: '0', border: '1px solid #f5f5f5', borderTop: 'none', borderBottom: 'none'}}>
           {/* 分三部分  上面的文本的操作，中间（左边的文件操作和插件，和编辑区） 下面的foot */}
           <Toolbar/>
           {/* 中间 */}
           <Editor/>
           <Footer/>
-        </Card>
+        </section>
       </Col>
     </>
   )

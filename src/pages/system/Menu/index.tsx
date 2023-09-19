@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {
   Button,
-  Card,
   Col,
   Form,
   Input,
   InputNumber,
   InputRef,
+  Layout,
   message,
   Modal,
   Popconfirm,
@@ -203,13 +203,13 @@ const Menu: React.FC = () => {
       title: '菜单名称',
       dataIndex: 'name',
       key: 'name',
-      width: '12%'
+      width: '140px'
     },
     {
       title: '菜单类型',
       dataIndex: 'menuType',
       key: 'menuType',
-      width: '5%',
+      width: '80px',
       align: 'center',
       render: (text) => {
         return text === 0 ? "一级菜单" : (text === 1 ? "子菜单" : "按钮");
@@ -218,7 +218,7 @@ const Menu: React.FC = () => {
     {
       title: '图标',
       dataIndex: 'icon',
-      width: '5%',
+      width: '80px',
       key: 'icon',
       align: 'center',
       render: (text) => {
@@ -229,26 +229,26 @@ const Menu: React.FC = () => {
       title: '组件',
       dataIndex: 'component',
       key: 'component',
-      width: '12%',
+      width: '120px',
     },
     {
       title: '路径',
       dataIndex: 'url',
       key: 'url',
-      width: '12%',
+      width: '180px',
     },
     {
       title: '排序',
       dataIndex: 'sortNo',
       key: 'sortNo',
-      width: '5%',
+      width: '80px',
       align: 'center'
     },
     {
       title: '操作',
       dataIndex: 'sort_no',
       key: 'operation',
-      width: '10%',
+      width: '180px',
       align: 'center',
       render: (_text, record) => (
         <Space size="small">
@@ -281,7 +281,7 @@ const Menu: React.FC = () => {
   return (
     <>
       {/* 查询区域 */}
-      <Card>
+      <Layout.Header className="layout-header-row">
         <Form form={form} onFinish={onFinish}>
           <Row gutter={24}>
             <Col span={5}>
@@ -314,18 +314,23 @@ const Menu: React.FC = () => {
             </Col>
           </Row>
         </Form>
-      </Card>
-      <Card style={{marginTop: '6px'}}>
-        <Button type="primary" onClick={add}><PlusOutlined/>新增</Button>
-        <Table
-          style={{marginTop: '6px'}}
-          className="table"
-          scroll={{x: 'max-content', y: 'calc(100vh - 400px)'}}
-          size="middle"
-          columns={columns}
-          dataSource={tableData}
-        />
-      </Card>
+      </Layout.Header>
+      <Layout.Content style={{marginTop: '6px'}}>
+        <section className="layout-operation-bar">
+          <Space>
+            <Button type="primary" onClick={add}><PlusOutlined/>新增</Button>
+          </Space>
+        </section>
+        <section className="integration-layout-content">
+          <Table
+            style={{marginTop: '6px'}}
+            className="table"
+            size="middle"
+            columns={columns}
+            dataSource={tableData}
+          />
+        </section>
+      </Layout.Content>
       {/* 编辑弹窗 */}
       <Modal open={open}
              centered
@@ -374,17 +379,17 @@ const Menu: React.FC = () => {
             <Input ref={inputRef} allowClear placeholder="菜单名称"/>
           </Form.Item>
           {showParent &&
-            <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
-              <TreeSelect
-                style={{width: '100%'}}
-                value={value}
-                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                treeData={treeData}
-                placeholder="请选择"
-                treeDefaultExpandAll
-                onChange={onChange}
-              />
-            </Form.Item>}
+              <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
+                  <TreeSelect
+                      style={{width: '100%'}}
+                      value={value}
+                      dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                      treeData={treeData}
+                      placeholder="请选择"
+                      treeDefaultExpandAll
+                      onChange={onChange}
+                  />
+              </Form.Item>}
           <Form.Item name="url" label="菜单路径" rules={[{required: true, message: '请输入菜单路径！'}]}>
             <Input allowClear placeholder="菜单路径"/>
           </Form.Item>
@@ -393,7 +398,8 @@ const Menu: React.FC = () => {
           </Form.Item>
           <Form.Item name="icon" label="菜单图标">
             <Input allowClear
-                   addonAfter={<Popover placement="bottomRight" trigger="click" arrow={false} content={<IconPicker/>}><SettingOutlined/></Popover>}/>
+                   addonAfter={<Popover placement="bottomRight" trigger="click" arrow={false}
+                                        content={<IconPicker/>}><SettingOutlined/></Popover>}/>
           </Form.Item>
           <Form.Item name="sortNo" label="序号">
             <InputNumber/>

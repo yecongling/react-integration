@@ -1,6 +1,6 @@
 import React, {useRef, useState} from "react";
 import type {TabsProps} from 'antd';
-import {Button, Card, Col, Input, InputRef, Row, Tabs} from "antd";
+import {Button, Col, Input, InputRef, Row, Tabs} from "antd";
 import ITree from "@/components/emr/ITree";
 import "./designer.less";
 import Designer from "@/components/emr/editor/Designer";
@@ -145,18 +145,18 @@ const DesignCenter: React.FC = () => {
       <Row className="editor-panel" style={{width: '100%', height: 'calc(100%)'}} gutter={6}>
         {/* 左边的栏分类带检索 */}
         <Col span={4} className="editor-category" style={{height: '100%'}}>
-          <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
+          <section style={{padding: '10px', height: '100%'}}>
             <Input.Search autoFocus placeholder="通过名称检索" enterButton
                           style={{width: 'calc(100% - 40px)', marginRight: '6px'}} onSearch={onSearchEmr}/>
             <Button type="primary" icon={<MenuFoldOutlined/>} title="收缩展开"/>
             <ITree treeData={treeData} defaultExpandAll defaultSelectedKeys={["00003"]}></ITree>
-          </Card>
+          </section>
         </Col>
         {/* 中间编辑区 */}
         <Designer/>
         {/* 最右边的数据元区域 */}
         <Col span={4} className="editor-data" style={{height: '100%'}}>
-          <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
+          <section style={{padding: '10px', height: '100%'}}>
             <Row style={{height: '100%'}}>
               <Col span={24}>
                 <Tabs
@@ -170,7 +170,7 @@ const DesignCenter: React.FC = () => {
                 />
               </Col>
             </Row>
-          </Card>
+          </section>
         </Col>
       </Row>
       <MetaData width={800} open={openMetaData} onCancel={onCancel}/>

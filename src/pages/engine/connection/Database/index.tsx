@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Button, Card, Col, Form, Input, InputRef, Modal, Popconfirm, Row, Select, Space, Table} from "antd";
+import {Button, Col, Form, Input, InputRef, Layout, Modal, Popconfirm, Row, Select, Space, Table} from "antd";
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
@@ -125,7 +125,6 @@ const Database: React.FC = () => {
    */
   const rowSelection = {
     fixed: true,
-    columnWidth: 50,
     selectedRowKeys,
     onChange: onSelectChange,
   }
@@ -144,13 +143,13 @@ const Database: React.FC = () => {
     {
       title: '数据源名称',
       dataIndex: 'name',
-      width: '10%',
+      width: '120px',
       align: 'center'
     },
     {
       title: '数据库类型',
       dataIndex: 'datasourceType',
-      width: '10%',
+      width: '120px',
       align: 'center',
       render: (text) => {
         switch (text?.datasourceType) {
@@ -164,25 +163,25 @@ const Database: React.FC = () => {
     {
       title: '测试SQL',
       dataIndex: 'testQuery',
-      width: '15%',
+      width: '180px',
       align: 'center'
     },
     {
       title: '连接地址',
       dataIndex: 'url',
-      width: 'calc(50% - 10px)',
+      width: '240px',
       align: 'center'
     },
     {
       title: '用户名',
       dataIndex: 'username',
-      width: '5%',
+      width: '80px',
       align: 'center'
     },
     {
       title: '操作',
       dataIndex: 'operation',
-      width: '10%',
+      width: '120px',
       align: 'center',
       render: (_text, record) => (
         <Space size="small">
@@ -204,7 +203,7 @@ const Database: React.FC = () => {
   return (
     <>
       {/* 查询区域 */}
-      <Card>
+      <Layout.Header className="layout-header-row">
         <Form form={form} onFinish={onFinish}>
           <Row gutter={24}>
             <Col span={6}>
@@ -230,23 +229,25 @@ const Database: React.FC = () => {
             </Col>
           </Row>
         </Form>
-      </Card>
-      <Card style={{marginTop: '6px'}}>
-        <Space>
-          <Button type="primary" onClick={add}><PlusOutlined/>新增</Button>
-          <Button type="primary" onClick={importExcel}><LoginOutlined/>导入</Button>
-          <Button type="primary" onClick={exportExcel}><LogoutOutlined/>导出</Button>
-        </Space>
-        <Table
-          style={{marginTop: '6px'}}
-          bordered
-          size="middle"
-          columns={columns}
-          dataSource={dbSource}
-          rowSelection={rowSelection}
-          rowKey={record => record.id}
-        />
-      </Card>
+      </Layout.Header>
+      <Layout.Content style={{marginTop: '6px'}}>
+        <section className="layout-operation-bar">
+          <Space>
+            <Button type="primary" onClick={add}><PlusOutlined/>新增</Button>
+            <Button type="primary" onClick={importExcel}><LoginOutlined/>导入</Button>
+            <Button type="primary" onClick={exportExcel}><LogoutOutlined/>导出</Button>
+          </Space>
+        </section>
+        <section className="integration-layout-content">
+          <Table
+            style={{marginTop: '6px'}}
+            columns={columns}
+            dataSource={dbSource}
+            rowSelection={rowSelection}
+            rowKey={record => record.id}
+          />
+        </section>
+      </Layout.Content>
       {/* 编辑弹窗 */}
       <Modal open={open}
              centered

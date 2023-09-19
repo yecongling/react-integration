@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {
   Button,
-  Card,
   Col,
   Dropdown,
   Form,
   Input,
   InputRef,
+  Layout,
   MenuProps,
   message,
   Popconfirm,
@@ -152,7 +152,7 @@ const ProjectMaintain: React.FC = () => {
     {
       title: "运行状态",
       dataIndex: 'status',
-      width: '5%',
+      width: '40px',
       align: 'center',
       render: function (text) {
         return text === '1' ? <Switch defaultChecked/> : <Switch/>;
@@ -161,7 +161,7 @@ const ProjectMaintain: React.FC = () => {
     {
       title: "警告",
       dataIndex: 'warning',
-      width: '5%',
+      width: '40px',
       align: 'center',
       render: function (text) {
         return <QuestionCircleOutlined style={{color: text ? 'orange' : 'gray'}}/>;
@@ -170,7 +170,7 @@ const ProjectMaintain: React.FC = () => {
     {
       title: "项目名称",
       dataIndex: 'projectName',
-      width: '15%',
+      width: '160px',
       align: 'left',
       ellipsis: true,
       render: function (text, record) {
@@ -186,7 +186,7 @@ const ProjectMaintain: React.FC = () => {
     {
       title: "优先级",
       dataIndex: 'projectPriority',
-      width: '4%',
+      width: '40px',
       align: 'left',
       defaultSortOrder: 'descend',
       sorter: (a, b) => a.projectPriority - b.projectPriority,
@@ -194,14 +194,14 @@ const ProjectMaintain: React.FC = () => {
     {
       title: "描述",
       dataIndex: 'description',
-      width: '16%',
+      width: '220px',
       align: 'left',
       ellipsis: true
     },
     {
       title: "类型",
       dataIndex: 'projectType',
-      width: '5%',
+      width: '40px',
       align: 'center',
       render: function (text) {
         if (text === 1) {
@@ -213,7 +213,7 @@ const ProjectMaintain: React.FC = () => {
     {
       title: "视图",
       dataIndex: 'chart',
-      width: '5%',
+      width: '40px',
       align: 'center',
       render: function () {
         return <FullscreenOutlined/>;
@@ -222,7 +222,7 @@ const ProjectMaintain: React.FC = () => {
     {
       title: "操作",
       dataIndex: 'opr',
-      width: '10%',
+      width: '120px',
       align: 'center',
       fixed: 'right',
       render: function (_text, record) {
@@ -255,7 +255,7 @@ const ProjectMaintain: React.FC = () => {
   return (
     <>
       {/* 查询区域 */}
-      <Card>
+      <Layout.Header className="layout-header-row">
         <Form form={searchForm} onFinish={onSearch} initialValues={{projectType: '-1'}}>
           <Row gutter={24}>
             <Col span={6}>
@@ -278,18 +278,22 @@ const ProjectMaintain: React.FC = () => {
             </Col>
           </Row>
         </Form>
-      </Card>
-      <Card style={{marginTop: '6px'}}>
-        <Space>
-          <Button type="primary" onClick={addProject}>新增项目</Button>
-        </Space>
-        <Table
-          style={{marginTop: '6px'}}
-          size="middle"
-          columns={columns}
-          dataSource={projectSource}
-        />
-      </Card>
+      </Layout.Header>
+      <Layout.Content style={{marginTop: '6px'}}>
+        <section className="layout-operation-bar">
+          <Space>
+            <Button type="primary" onClick={addProject}>新增项目</Button>
+          </Space>
+        </section>
+        <section className="integration-layout-content">
+          <Table
+            rowSelection={{type: 'checkbox'}}
+            style={{marginTop: '6px'}}
+            size="middle"
+            columns={columns}
+            dataSource={projectSource}
+          /></section>
+      </Layout.Content>
 
       {/* 选择项目类型 */}
       <ProjectTypeModal projectType={projectType} setProjectType={setProjectType}

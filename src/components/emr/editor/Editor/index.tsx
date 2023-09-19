@@ -50,7 +50,7 @@ const Editor: React.FC<EditorProps> = (props) => {
 
   return (
     <>
-      <Row className="editor-container" style={{height: 'calc(100% - 132px)'}}>
+      <Row className="editor-container" style={{height: 'calc(100% - 134px)'}}>
         <Col span={24} style={{height: '100%'}}>
           <Row className="editor-content" style={{height: '100%'}}>
             {/* 这里添加横竖两个标尺、大纲 */}

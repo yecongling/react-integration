@@ -12,11 +12,16 @@ const Layouts: React.FC = () => {
     <ConfigProvider theme={{
       token: {
         colorPrimary: colorPrimary
+      },
+      components: {
+        Table: {
+          headerBg: '#fff'
+        }
       }
     }} locale={ZhCN}>
       <Layout style={{height: "100%"}}>
         <Header/>
-        <Layout>
+        <Layout style={{backgroundColor: '#fff'}}>
           <LeftMenu/>
           <Content/>
         </Layout>
