@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Card, Col, Input, List, notification, Row, Space, Tabs, TabsProps, Tag} from "antd";
+import {Button, Col, Input, List, notification, Row, Space, Tabs, TabsProps, Tag} from "antd";
 import './index.less';
 import {useLocation, useNavigate} from "react-router-dom";
 import {
@@ -87,16 +87,22 @@ const Designer: React.FC = () => {
       <Endpoint open={openEndpointModal} onCancel={cancelEndpointModal}/>
       <Row style={{height: '100%'}} gutter={6}>
         <Col span={4}>
-          <Card style={{height: '100%'}} bodyStyle={{padding: '10px', height: '100%'}}>
+          <section style={{height: '100%', padding: '10px'}}>
             <Input.Search autoFocus placeholder="通过名称检索" enterButton onSearch={() => alert("检索")}/>
             <Tabs tabBarStyle={{marginTop: '6px'}} items={items}/>
-          </Card>
+          </section>
         </Col>
-        <Col span={20}>
+        <Col span={20} style={{borderLeft: '1px solid #f5f5f5'}}>
           <Row className="designer-toolbar">
-            <Card style={{height: '44px', width: '100%', paddingRight: '20px'}}
-                  bodyStyle={{display: 'flex', height: '100%', alignItems: 'center', padding: '0'}}>
-              <Col span={10} style={{paddingLeft: '20px'}}>
+            <section style={{
+              height: '50px',
+              width: '100%',
+              paddingRight: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              padding: '10px'
+            }}>
+              <Col span={10}>
                 <Space.Compact>
                   <Button type="default" icon={<UndoOutlined/>} disabled>撤销</Button>
                   <Button type="default" icon={<RedoOutlined/>} disabled>恢复</Button>
@@ -128,13 +134,13 @@ const Designer: React.FC = () => {
                   <Button type="default" icon={<MenuOutlined/>} title="面板" onClick={clickPanel}/>
                 </Space>
               </Col>
-            </Card>
+            </section>
           </Row>
-          <Row className="designer-content" style={{height: 'calc(100% - 50px)', marginTop: '6px'}}>
+          <Row className="designer-content" style={{height: 'calc(100% - 52px)', borderTop: '1px solid #f5f5f5'}}>
             <Col span={24} className="designer-area" style={{height: '100%'}}>
-              <Card style={{height: '100%'}} bodyStyle={{height: '100%', padding: '10px'}}>
+              <section style={{height: '100%', padding: '10px'}}>
                 使用apache camel 实现系统见集成
-              </Card>
+              </section>
             </Col>
           </Row>
         </Col>

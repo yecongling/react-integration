@@ -11,11 +11,15 @@ const Layouts: React.FC = () => {
   return (
     <ConfigProvider theme={{
       token: {
-        colorPrimary: colorPrimary
+        colorPrimary: colorPrimary,
       },
       components: {
         Table: {
           headerBg: '#fff'
+        },
+        Modal: {
+          borderRadius: 4,
+          borderRadiusLG: 4
         }
       }
     }} locale={ZhCN}>

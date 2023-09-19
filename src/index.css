@@ -504,14 +504,31 @@ code {
     monospace;
 }
 
+.ant-modal .ant-modal-content {
+    padding: 0;
+    /*border-radius: 4px;*/
+}
+
 .ant-modal-header {
-    padding: 6px 0;
+    padding: 10px 20px 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
     border-bottom: 1px solid #e8e8e8;
 }
 
+.ant-modal .ant-modal-title {
+    font-weight: 500;
+}
+
 .ant-modal-footer {
-    padding: 16px 0 0 0;
+    padding: 12px 20px 10px;
+    margin-top: 0 !important;
     border-top: 1px solid #e8e8e8;
+}
+
+.ant-modal .ant-modal-close {
+    top: 12px;
 }
 
 /* 侧边栏默认的颜色 */
