@@ -504,7 +504,7 @@ code {
     monospace;
 }
 
-.ant-modal .ant-modal-content {
+.ant-modal:not(.ant-modal-confirm) .ant-modal-content {
     padding: 0;
     /*border-radius: 4px;*/
 }

@@ -14,9 +14,6 @@ const Layouts: React.FC = () => {
         colorPrimary: colorPrimary,
       },
       components: {
-        Table: {
-          headerBg: '#fff'
-        },
         Modal: {
           borderRadius: 4,
           borderRadiusLG: 4

@@ -105,8 +105,9 @@ const Header: React.FC = () => {
         className="ant-layout-header dis-fl jc-sb ai-ct"
         style={{
           padding: '0 16px 0 0',
-          height: '48px',
-          borderBottom: ' 1px solid #f0f1f2',
+          height: '50px',
+          minHeight: '50px',
+          borderBottom: ' 1px solid #e9edf0',
           backgroundColor: '#fff',
         }}>
         <div className="dis-fl js-sb ai-ct toolbox">
