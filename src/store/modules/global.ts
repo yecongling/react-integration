@@ -9,7 +9,7 @@ export interface globalState {
 const initialState: globalState = {
   theme: "light",
   colorPrimary: "#1890ff",
-  collapse: false
+  collapse: true
 }
 
 // 创建一个Slice
@@ -39,5 +39,5 @@ export const global = createSlice({
 // 到处reducer方法
 export const {setCollapse, setTheme, setColorPrimary} = global.actions;
 
-// 默认到处
+// 默认导出
 export default global.reducer

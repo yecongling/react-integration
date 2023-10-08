@@ -1,5 +1,6 @@
 import React, {useRef} from "react";
 import {Card, Col, Form, Input, InputRef, Modal, ModalProps, Row, Select} from "antd";
+import MetaDataTree from "@/components/emr/tree/MetaDataTree.tsx";
 
 /**
  * 数据元
@@ -19,6 +20,7 @@ const MetaData: React.FC<ModalProps> = (props) => {
           <Col span={8}>
             <Card style={{height: "100%"}} bodyStyle={{height: "100%", padding: "10px"}}>
               <Input.Search ref={searchRef} autoFocus placeholder="通过名称检索" enterButton/>
+              <MetaDataTree/>
             </Card>
           </Col>
           <Col span={16}>

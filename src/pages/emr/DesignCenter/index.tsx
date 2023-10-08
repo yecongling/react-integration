@@ -1,22 +1,16 @@
 import React, {useRef, useState} from "react";
 import type {TabsProps} from 'antd';
 import {Button, Col, Input, InputRef, Row, Tabs} from "antd";
-import ITree from "@/components/emr/ITree";
 import "./designer.less";
 import Designer from "@/components/emr/editor/Designer";
-import type {DataNode} from 'antd/es/tree';
-import {ExpandOutlined, FileOutlined, FolderOpenOutlined, FormOutlined, MenuFoldOutlined} from "@ant-design/icons";
-import {useSelector} from "react-redux";
+import {FormOutlined} from "@ant-design/icons";
 import MetaData from "@/components/emr/dataset/MetaData";
+import EmrDefTree from "@/components/emr/tree/EmrDefTree";
+import MetaDataTree from "@/components/emr/tree/MetaDataTree";
 
 const DesignCenter: React.FC = () => {
-  const {colorPrimary} = useSelector((store: any) => store.global);
   const searchMetaRef = useRef<InputRef>(null);
   const [openMetaData, setOpenMetaData] = useState(false);
-  const onSearchEmr = (value: string) => {
-    console.log(value);
-  }
-
   /**
    * tab点击的时候
    * @param activeKey
@@ -49,68 +43,6 @@ const DesignCenter: React.FC = () => {
     console.log(value)
   }
 
-  /* 模拟数据 */
-  const treeData: DataNode[] = [
-    {
-      title: '住院病历',
-      key: '00001',
-      icon: <FolderOpenOutlined style={{color: colorPrimary, fontSize: '18px', verticalAlign: 'text-top'}}/>,
-      children: [
-        {
-          title: '入院记录',
-          key: '00002',
-          icon: <FolderOpenOutlined style={{color: colorPrimary, fontSize: '18px', verticalAlign: 'text-top'}}/>,
-          children: [
-            {
-              title: '外科入院记录',
-              key: '00003',
-              icon: <FileOutlined style={{fontSize: '18px', verticalAlign: 'text-top'}}/>,
-            }
-          ]
-        }
-      ]
-    },
-    {
-      title: '护理记录',
-      key: '00005',
-      icon: <FolderOpenOutlined style={{color: colorPrimary, fontSize: '18px', verticalAlign: 'text-top'}}/>,
-      children: [
-        {
-          title: '一般护理记录',
-          key: '0006',
-          icon: <FileOutlined style={{fontSize: '18px', verticalAlign: 'text-top'}}/>,
-        }
-      ]
-    }
-  ];
-
-  const emrMetaData: DataNode[] = [
-    {
-      title: '卫生信息数据元',
-      key: '00001',
-      icon: <FolderOpenOutlined style={{color: colorPrimary, fontSize: '18px', verticalAlign: 'text-top'}}/>,
-      children: [
-        {
-          title: '第一个数据',
-          key: '00002',
-          icon: <ExpandOutlined style={{color: colorPrimary, fontSize: '18px', verticalAlign: 'text-top'}}/>
-        }
-      ]
-    },
-    {
-      title: "电子病历数据元",
-      key: "00003",
-      icon: <FolderOpenOutlined style={{color: colorPrimary, fontSize: '18px', verticalAlign: 'text-top'}}/>,
-      children: [
-        {
-          title: "住院号",
-          key: "00004",
-          icon: <ExpandOutlined style={{color: colorPrimary, fontSize: '18px', verticalAlign: 'text-top'}}/>,
-        }
-      ]
-    }
-  ]
-
   const metaDataItems: TabsProps["items"] = [
     {
       key: "props",
@@ -124,7 +56,7 @@ const DesignCenter: React.FC = () => {
         <Input.Search ref={searchMetaRef} placeholder="输入编码、名称检索" enterButton onSearch={onSearchData}
                       style={{width: 'calc(100% - 40px)', marginRight: '6px'}}/>
         <Button type="primary" icon={<FormOutlined/>} onClick={editMetaData} title="编辑数据元"/>
-        <ITree treeData={emrMetaData} defaultExpandAll/>
+        <MetaDataTree/>
       </>
     },
     {
@@ -146,14 +78,11 @@ const DesignCenter: React.FC = () => {
         {/* 左边的栏分类带检索 */}
         <Col span={4} className="editor-category" style={{height: '100%'}}>
           <section style={{padding: '10px', height: '100%'}}>
-            <Input.Search autoFocus placeholder="通过名称检索" enterButton
-                          style={{width: 'calc(100% - 40px)', marginRight: '6px'}} onSearch={onSearchEmr}/>
-            <Button type="primary" icon={<MenuFoldOutlined/>} title="收缩展开"/>
-            <ITree treeData={treeData} defaultExpandAll defaultSelectedKeys={["00003"]}></ITree>
+            <EmrDefTree/>
           </section>
         </Col>
         {/* 中间编辑区 */}
-        <Designer/>
+        <Designer span={16}/>
         {/* 最右边的数据元区域 */}
         <Col span={4} className="editor-data" style={{height: '100%'}}>
           <section style={{padding: '10px', height: '100%'}}>
