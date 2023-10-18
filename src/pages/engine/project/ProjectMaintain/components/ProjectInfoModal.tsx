@@ -76,6 +76,7 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
              okButtonProps={{icon: <CheckCircleOutlined/>}}
              cancelButtonProps={{icon: <CloseCircleOutlined/>}}
              cancelText="取消"
+             styles={{body: {padding: '10px 40px'}}}
              style={{top: '20px'}}
              width={800}
              onOk={() => {
@@ -86,7 +87,6 @@ const ProjectInfoModal: React.FC<ProjectInfoProps> = (props) => {
              }}
              onCancel={onCancel}
              afterOpenChange={handleAfterOpen}
-             bodyStyle={{padding: '10px 40px'}}
       >
         <Form
           form={projectData}

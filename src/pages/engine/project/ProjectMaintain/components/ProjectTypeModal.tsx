@@ -30,6 +30,7 @@ const ProjectTypeModal: React.FC<ProjectTypeProps> = (props) => {
              maskClosable={false}
              title="选择项目类型"
              width={600}
+             styles={{body: {padding: '10px'}}}
              footer={null}
              onCancel={() => setProjectType(false)}
              afterOpenChange={handleAfterOpen}

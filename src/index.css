@@ -291,9 +291,9 @@
     color: #e56033 !important;
 }
 
-.ant-menu-inline-collapsed {
-    width: 50px !important;
-}
+/*.ant-menu-inline-collapsed {*/
+/*    width: 50px !important;*/
+/*}*/
 
 .ant-table-thead th:hover {
     background-color: #f0f0f0 !important;

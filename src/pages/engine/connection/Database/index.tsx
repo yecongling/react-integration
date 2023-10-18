@@ -267,7 +267,7 @@ const Database: React.FC = () => {
              onCancel={handCancel}
              afterOpenChange={handleAfterOpen}
              width={1000}
-             bodyStyle={{padding: '10px 40px', height: '600px', overflowY: 'auto'}}
+             styles={{body: {padding: '10px 40px', height: '600px', overflowY: 'auto'}}}
       >
         <Form
           form={data}

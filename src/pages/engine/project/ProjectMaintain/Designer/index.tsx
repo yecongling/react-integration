@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Col, Input, List, notification, Row, Space, Tabs, TabsProps, Tag} from "antd";
 import './index.less';
 import {useLocation, useNavigate} from "react-router-dom";
@@ -24,7 +24,6 @@ import Endpoint from "@/pages/engine/project/ProjectMaintain/Designer/components
 const Designer: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state)
   const [notifyPanel, contextHolder] = notification.useNotification();
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openEndpointModal, setOpenEndpointModal] = useState(false);
@@ -80,6 +79,17 @@ const Designer: React.FC = () => {
   const cancelEndpointModal = () => {
     setOpenEndpointModal(false);
   }
+
+  /**
+   * 绘制标尺
+   */
+  const drawRuler = () => {
+    console.log("绘制标尺");
+  }
+
+  useEffect(() => {
+    drawRuler();
+  }, []);
 
   return (
     <>
@@ -138,8 +148,14 @@ const Designer: React.FC = () => {
           </Row>
           <Row className="designer-content" style={{height: 'calc(100% - 52px)', borderTop: '1px solid #f5f5f5'}}>
             <Col span={24} className="designer-area" style={{height: '100%'}}>
-              <section style={{height: '100%', padding: '10px'}}>
-                使用apache camel 实现系统见集成
+              <section style={{height: '100%', position: 'relative'}}>
+                <div className="landscape-canvas-ruler" style={{width: 'calc(100% - 20px)', height: '20px'}}>
+                  <canvas id="landscape-canvas"></canvas>
+                </div>
+                <div className="vertical-canvas-ruler" style={{width: '20px', height: 'calc(100% - 20px)'}}>
+                  <canvas id="vertical-canvas"></canvas>
+                </div>
+                <div className="editor-content">编辑器内容区</div>
               </section>
             </Col>
           </Row>

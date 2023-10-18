@@ -107,7 +107,7 @@ const LeftMenu: React.FC = () => {
   return (
     <Sider
       trigger={null}
-      collapsedWidth={50}
+      collapsedWidth={64}
       className="scroll ant-menu"
       style={{
         overflowX: 'hidden',
