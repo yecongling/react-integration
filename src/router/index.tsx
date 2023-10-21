@@ -28,12 +28,19 @@ const routes = [
       {
         path: "home",
         auth: false,
+        title: '首页',
         component: lazyLoad('Home').type
       },
       {
         path: "system/menu",
         auth: false,
         component: lazyLoad('system/Menu').type
+      },
+      {
+        path: 'system/personal',
+        title: '个人中心',
+        auth: false,
+        component: lazyLoad('system/Personal').type
       },
       {
         path: "engine/project/projectMaintain",
@@ -60,6 +67,13 @@ const routes = [
         auth: false,
         component: lazyLoad('engine/resource/Database').type
       },
+      {
+        path: 'engine/dataHandle/dataTransfer',
+        auth: false,
+        title: '数据转换',
+        component: lazyLoad('engine/dataHandle/DataTransfer').type
+      },
+
       {
         path: "emr/designCenter",
         auth: false,

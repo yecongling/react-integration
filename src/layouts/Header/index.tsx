@@ -40,17 +40,26 @@ const Header: React.FC = () => {
       key: '1',
       label: '个人中心',
       icon: <UserOutlined/>,
-      disabled: false
+      disabled: false,
+      onClick: () => {
+        navigate('system/personal')
+      }
     },
     {
       key: '2',
       label: '密码修改',
-      icon: <EditOutlined/>
+      icon: <EditOutlined/>,
+      onClick: () => {
+        alert('进行密码修改')
+      }
     },
     {
       key: '3',
       label: '刷新缓存',
-      icon: <SyncOutlined/>
+      icon: <SyncOutlined/>,
+      onClick: () => {
+        alert('刷新缓存操作')
+      }
     },
     {
       key: '4',
@@ -138,17 +147,23 @@ const Header: React.FC = () => {
         <div className="dis-fl js-sb ai-ct toolbox">
           <Space size="large">
             <Tooltip placement="bottom" title="搜索">
-              <SearchOutlined style={{cursor: 'pointer', fontSize: '18px'}}/>
+              <SearchOutlined style={{cursor: 'pointer', fontSize: '18px'}} onClick={() => {
+                alert('显示搜索框')
+              }}/>
             </Tooltip>
             <Tooltip placement="bottom" title="github">
               <GithubOutlined style={{cursor: 'pointer', fontSize: '18px'}} onClick={routeGitHub}/>
             </Tooltip>
             <Tooltip placement="bottom" title="锁屏">
-              <LockOutlined style={{cursor: 'pointer', fontSize: '18px'}}/>
+              <LockOutlined style={{cursor: 'pointer', fontSize: '18px'}} onClick={() => {
+                alert('进行锁屏操作')
+              }}/>
             </Tooltip>
             <Tooltip placement="bottom" title="通知">
               <Badge count={5}>
-                <BellOutlined style={{cursor: 'pointer', fontSize: '18px'}}/>
+                <BellOutlined style={{cursor: 'pointer', fontSize: '18px'}} onClick={() => {
+                  alert('显示通知面板')
+                }}/>
               </Badge>
             </Tooltip>
             <Tooltip placement="bottom" title="系统设置">
