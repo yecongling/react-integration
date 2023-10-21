@@ -41,6 +41,11 @@ const routes = [
         component: lazyLoad('engine/project/ProjectMaintain').type
       },
       {
+        path: "engine/project/terminal",
+        auth: false,
+        component: lazyLoad('engine/project/TerminalManager').type
+      },
+      {
         path: "/engine/project/projectMaintain/designer",
         auth: false,
         component: lazyLoad('engine/project/ProjectMaintain/Designer').type

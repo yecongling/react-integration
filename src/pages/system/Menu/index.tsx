@@ -350,7 +350,7 @@ const Menu: React.FC = () => {
              }}
              onCancel={onCancel}
              afterOpenChange={handleAfterOpen}
-             bodyStyle={{padding: '10px 40px'}}
+             styles={{body: {padding: '10px 40px'}}}
       >
         <Form
           form={menuData}
@@ -379,17 +379,17 @@ const Menu: React.FC = () => {
             <Input ref={inputRef} allowClear placeholder="菜单名称"/>
           </Form.Item>
           {showParent &&
-              <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
-                  <TreeSelect
-                      style={{width: '100%'}}
-                      value={value}
-                      dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                      treeData={treeData}
-                      placeholder="请选择"
-                      treeDefaultExpandAll
-                      onChange={onChange}
-                  />
-              </Form.Item>}
+            <Form.Item name="parentId" label="上级菜单" rules={[{required: true, message: '请选择上级菜单！'}]}>
+              <TreeSelect
+                style={{width: '100%'}}
+                value={value}
+                dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                treeData={treeData}
+                placeholder="请选择"
+                treeDefaultExpandAll
+                onChange={onChange}
+              />
+            </Form.Item>}
           <Form.Item name="url" label="菜单路径" rules={[{required: true, message: '请输入菜单路径！'}]}>
             <Input allowClear placeholder="菜单路径"/>
           </Form.Item>
