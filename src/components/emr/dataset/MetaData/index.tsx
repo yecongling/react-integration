@@ -66,8 +66,10 @@ const MetaData: React.FC<ModalProps> = (props) => {
 
 MetaData.defaultProps = {
   title: "数据元维护",
-  bodyStyle: {
-    height: "500px"
+  styles: {
+    body: {
+      height: '500px'
+    }
   },
   maskClosable: false
 }
